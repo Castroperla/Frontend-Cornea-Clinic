@@ -29,7 +29,7 @@
               <v-btn
                   color="#3e68ff"
                   icon 
-                  @click="$event => editPatients(item)"
+                  @click="editPatients(item.email)"
                   v-bind="attrs"
                   v-on="on"
               >
@@ -135,7 +135,7 @@
         <v-btn
           color="green darken-1"
           text
-          @click="$event => dialogEdit = false"
+          @click="dialogEdit = false"
         >
           Cancelar
         </v-btn>
@@ -143,7 +143,7 @@
         <v-btn
           color="#3e68ff"
           text
-          @click="$event => editar()"
+          @click="editar()"
         >
           Editar
         </v-btn>
@@ -170,7 +170,7 @@
         <v-btn
           color="green darken-1"
           text
-          @click="$event => dialog = false"
+          @click="dialog = false"
         >
           Cancelar
         </v-btn>
@@ -178,7 +178,7 @@
         <v-btn
           color="green darken-1"
           text
-          @click="$event => borrar()"
+          @click="borrar()"
         >
           Borrar
         </v-btn>
