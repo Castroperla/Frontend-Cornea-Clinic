@@ -21,7 +21,7 @@ import patRegister from '~/components/Users/patRegister.vue';
 import ViPatient from '~/components/Users/ViPatient.vue';
 import logo from '~/components/Users/logo.vue';
 export default {
-    layout: 'pacientes',
+    layout: 'dashboard',
     components: {
         patRegister, 
         ViPatient, 
