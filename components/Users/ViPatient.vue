@@ -1,192 +1,195 @@
 <template>
-    
-  <v-row>
-  <v-data-table
-      :headers="headers"
-      :items="patients"
-      elevation="2"
-  >
-  <template #[`item.Acciones`]="{ item }">
-      <v-tooltip top>
-          <template v-slot:activator="{on, attrs}">
-              <v-btn
-                  color="red"
-                  icon 
-                  @click="deletePatients(item.email)"
-                  v-bind="attrs"
-                  v-on="on"
-              >
-              <v-icon>mdi-account-minus</v-icon>
-              </v-btn>
-          </template>
-          <span>
-              Eliminar el paciente{{ item.name }}
-          </span>
-      </v-tooltip>
+    <v-row>
+    <div class="contenedorDatos"> 
+        <v-data-table
+            :headers="headers"
+            :items="patients"
+            elevation="2"
+        >
+        <template #[`item.Acciones`]="{ item }">
+            <v-tooltip top>
+                <template v-slot:activator="{on, attrs}">
+                    <v-btn
+                        color="red"
+                        icon 
+                        @click="deletePatients(item.email)"
+                        v-bind="attrs"
+                        v-on="on"
+                    >
+                    <v-icon>mdi-account-minus</v-icon>
+                    </v-btn>
+                </template>
+                <span>
+                    Eliminar el paciente{{ item.name }}
+                </span>
+            </v-tooltip>
 
-      <v-tooltip top>
-          <template v-slot:activator="{on, attrs}">
-              <v-btn
-                  color="#3e68ff"
-                  icon 
-                  @click="editPatients(item.email)"
-                  v-bind="attrs"
-                  v-on="on"
-              >
-              <v-icon>mdi-account-edit</v-icon>
-              </v-btn>
-          </template>
-          <span>
-              Editar el pacientes {{ item.name }}
-          </span>
-      </v-tooltip>
-  </template> 
+            <v-tooltip top>
+                <template v-slot:activator="{on, attrs}">
+                    <v-btn
+                        color="#3e68ff"
+                        icon 
+                        @click="editPatients(item.email)"
+                        v-bind="attrs"
+                        v-on="on"
+                    >
+                    <v-icon>mdi-account-edit</v-icon>
+                    </v-btn>
+                </template>
+                <span>
+                    Editar el pacientes {{ item.name }}
+                </span>
+            </v-tooltip>
+        </template> 
 
-  </v-data-table>
-  <v-dialog
-    v-model="dialogEdit"
-    max-width="600"
-  >
-    <v-card>
-      <v-card-title class="text-h5">
-        Editar Pacientes
-      </v-card-title>
-
-    <div class="contenedor" style="margin:20px" >
-        <v-container>
-            <v-form ref="frmRegistro" v-model="frmRegistro">
-                <v-row style="width: 100%;">
-                    <v-col cols="12" style="text-align: center;">
-                        <p class="formTit">Add new patient</p>
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
-                    <v-col>
-                        <p>First name: </p>
-                        <input type="text" class="cajas" v-model="editPatientsData.name">
-                    </v-col>
-                    <v-col>
-                        <p>Lastname </p>
-                        <input type="text" class="cajas" v-model="editPatientsData.lastname" >
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <p>Email: </p>
-                        <input type="email" class="cajas" v-model="editPatientsData.email"> 
-                    </v-col>
-                    <v-col>
-                        <p>Mobile </p>
-                        <input type="text" class="cajas" v-model="editPatientsData.phone" >
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
-                    <v-col cols="4">
-                        <p>Date of birth </p>
-                        <input type="date" class="cajasB" v-model="editPatientsData.birthday">
-                    </v-col>
-                    <v-col cols="4">
-                        <p>Age </p>
-                        <input type="number" class="cajasC" v-model="editPatientsData.age">  
-                    </v-col>
-                    <v-col cols="4">
-                        <p>Gender</p>
-                        <v-radio-group  v-model="editPatientsData.gender">
-                            <v-radio
-                                label="Male"
-                                value="Male"
-                            ></v-radio>
-                            <v-radio
-                                label="Female"
-                                value="Female"
-                            ></v-radio>
-                            <v-radio
-                                label="Other"
-                                value="Other"
-                            ></v-radio>
-                        </v-radio-group>
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
-                    <v-col>
-                        <p> Address </p>
-                        <input type="text" class="cajasA" v-model="editPatientsData.address">
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
-                    <v-col>
-                        <p>Treatment </p>
-                        <input type="text" class="cajasP" v-model="editPatientsData.treatment">
-                    </v-col>
-                </v-row>
-                <v-row align="center">
-                    <v-col>
-                        <p>Blood Type: </p>
-                        <input type="text" class="cajas" v-model="editPatientsData.blood">
-                    </v-col>
-                </v-row>
-            </v-form>
-        </v-container>
+        </v-data-table>
     </div>
 
-      <v-card-actions>
-        <v-spacer></v-spacer>
 
-        <v-btn
-          color="green darken-1"
-          text
-          @click="dialogEdit = false"
-        >
-          Cancelar
-        </v-btn>
+    <v-dialog
+        v-model="dialogEdit"
+        max-width="600"
+    >
+        <v-card id="tarjeta">
+        <v-card-title class="text-h5">
+            Editar Pacientes
+        </v-card-title>
 
-        <v-btn
-          color="#3e68ff"
-          text
-          @click="editar()"
-        >
-          Editar
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+        <div class="contenedor" style="margin:20px" >
+            <v-container>
+                <v-form ref="frmRegistro" v-model="frmRegistro">
+                    <v-row style="width: 100%;">
+                        <v-col cols="12" style="text-align: center;">
+                            <p class="formTit">Add new patient</p>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" >
+                        <v-col>
+                            <p>First name: </p>
+                            <input type="text" class="cajas" v-model="editPatientsData.name">
+                        </v-col>
+                        <v-col>
+                            <p>Lastname </p>
+                            <input type="text" class="cajas" v-model="editPatientsData.lastname" >
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <p>Email: </p>
+                            <input type="email" class="cajas" v-model="editPatientsData.email"> 
+                        </v-col>
+                        <v-col>
+                            <p>Mobile </p>
+                            <input type="text" class="cajas" v-model="editPatientsData.phone" >
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" >
+                        <v-col cols="4">
+                            <p>Date of birth </p>
+                            <input type="date" class="cajasB" v-model="editPatientsData.birthday">
+                        </v-col>
+                        <v-col cols="4">
+                            <p>Age </p>
+                            <input type="number" class="cajasC" v-model="editPatientsData.age">  
+                        </v-col>
+                        <v-col cols="4">
+                            <p>Gender</p>
+                            <v-radio-group  v-model="editPatientsData.gender">
+                                <v-radio
+                                    label="Male"
+                                    value="Male"
+                                ></v-radio>
+                                <v-radio
+                                    label="Female"
+                                    value="Female"
+                                ></v-radio>
+                                <v-radio
+                                    label="Other"
+                                    value="Other"
+                                ></v-radio>
+                            </v-radio-group>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" >
+                        <v-col>
+                            <p> Address </p>
+                            <input type="text" class="cajasA" v-model="editPatientsData.address">
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" >
+                        <v-col>
+                            <p>Treatment </p>
+                            <input type="text" class="cajasP" v-model="editPatientsData.treatment">
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col>
+                            <p>Blood Type: </p>
+                            <input type="text" class="cajas" v-model="editPatientsData.blood">
+                        </v-col>
+                    </v-row>
+                </v-form>
+            </v-container>
+        </div>
 
-  <v-dialog
-    v-model="dialog"
-    max-width="290"
-  >
-    <v-card>
-      <v-card-title class="text-h5">
-        Borrar Pacientes
-      </v-card-title>
+        <v-card-actions>
+            <v-spacer></v-spacer>
 
-      <v-card-text>
-        ¿Estás seguro que quieres editar el paciente?
-      </v-card-text>
+            <v-btn
+            color="green darken-1"
+            text
+            @click="dialogEdit = false"
+            >
+            Cancelar
+            </v-btn>
 
-      <v-card-actions>
-        <v-spacer></v-spacer>
+            <v-btn
+            color="#3e68ff"
+            text
+            @click="editar()"
+            >
+            Editar
+            </v-btn>
+        </v-card-actions>
+        </v-card>
+    </v-dialog>
 
-        <v-btn
-          color="green darken-1"
-          text
-          @click="dialog = false"
-        >
-          Cancelar
-        </v-btn>
+    <v-dialog
+        v-model="dialog"
+        max-width="290"
+    >
+        <v-card>
+        <v-card-title class="text-h5">
+            Borrar Pacientes
+        </v-card-title>
 
-        <v-btn
-          color="green darken-1"
-          text
-          @click="borrar()"
-        >
-          Borrar
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+        <v-card-text>
+            ¿Estás seguro que quieres editar el paciente?
+        </v-card-text>
 
-  </v-row>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+            >
+            Cancelar
+            </v-btn>
+
+            <v-btn
+            color="green darken-1"
+            text
+            @click="borrar()"
+            >
+            Borrar
+            </v-btn>
+        </v-card-actions>
+        </v-card>
+    </v-dialog>
+
+    </v-row>
 </template>
 
 <style>
@@ -195,6 +198,30 @@
     height: 897px;
     border: 1px solid #000;
     padding: 70px;
+}
+
+#tarjeta{
+    width: 1011px;
+    height: 897px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    border: 2px solid var(--primary-green, #4FB783);
+    background: var(--gray-whte, #FFF);
+}
+
+.contenedorDatos{
+    width: 1119px;
+    height: 767px;
+}
+.contenedor1 {
+    width: 1139px;
+    height: 1002px;
+    flex-shrink: 0;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* O ajusta la altura según tus necesidades */
 }
 .formularioT {
     font-family: Open;
