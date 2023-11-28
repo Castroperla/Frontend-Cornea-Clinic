@@ -1,10 +1,10 @@
 <template>
     <v-row>
-    <div class="contenedorDatos"> 
         <v-data-table
             :headers="headers"
             :items="patients"
             elevation="2"
+            class="tabla1"
         >
         <template #[`item.Acciones`]="{ item }">
             <v-tooltip top>
@@ -29,8 +29,8 @@
                     <v-btn
                         color="#3e68ff"
                         icon 
-                        @click="editPatients(item.email)"
                         v-bind="attrs"
+                        @click="$event => editPatients(item)"
                         v-on="on"
                     >
                     <v-icon>mdi-account-edit</v-icon>
@@ -41,22 +41,19 @@
                 </span>
             </v-tooltip>
         </template> 
-
         </v-data-table>
-    </div>
-
 
     <v-dialog
         v-model="dialogEdit"
         max-width="600"
     >
-        <v-card id="tarjeta">
+        <v-card >
         <v-card-title class="text-h5">
             Editar Pacientes
         </v-card-title>
 
         <div class="contenedor" style="margin:20px" >
-            <v-container>
+            <v-card-text>
                 <v-form ref="frmRegistro" v-model="frmRegistro">
                     <v-row style="width: 100%;">
                         <v-col cols="12" style="text-align: center;">
@@ -129,7 +126,7 @@
                         </v-col>
                     </v-row>
                 </v-form>
-            </v-container>
+            </v-card-text>
         </div>
 
         <v-card-actions>
@@ -138,7 +135,7 @@
             <v-btn
             color="green darken-1"
             text
-            @click="dialogEdit = false"
+            @click="$event => dialogEdit = false"
             >
             Cancelar
             </v-btn>
@@ -146,7 +143,7 @@
             <v-btn
             color="#3e68ff"
             text
-            @click="editar()"
+            @click="event=>editar()"
             >
             Editar
             </v-btn>
@@ -173,7 +170,7 @@
             <v-btn
             color="green darken-1"
             text
-            @click="dialog = false"
+            @click="$event => dialog = false"
             >
             Cancelar
             </v-btn>
@@ -181,7 +178,7 @@
             <v-btn
             color="green darken-1"
             text
-            @click="borrar()"
+            @click="$event =>borrar()"
             >
             Borrar
             </v-btn>
@@ -254,7 +251,7 @@ export default {
           editPatientsData: {}, 
           dialogEdit: false,
           reglas: {
-              requerido: value => !!value || 'Campo Requerido', 
+              requerido: value => !!value || 'Campo Requerido'
           }, 
           frmRegistro: false
       }
@@ -308,19 +305,19 @@ export default {
           this.dialog = false
          // console.log('@@@ respuesta => ', rawResponse)
       }, 
-      editPatients (user) {
-          console.log('@@@ patient=>', user)
+      editPatients (patient) {
+          console.log('@@@ patient=>', patient)
 
-          this.editPatientsData.name = user.name
-          this.editPatientsData.lastname = user.lastname
-          this.editPatientsData.email = user.email
-          this.editPatientsData.phone= user.phone
-          this.editPatientsData.birthday= user.birthday
-          this.editPatientsData.age = user.age
-          this.editPatientsData.gender = user.gender
-          this.editPatientsData.address = user.address
-          this.editPatientsData.treatment = user.treatment
-          this.editPatientsData.blood = user.blood
+          this.editPatientsData.name = patient.name
+          this.editPatientsData.lastname = patient.lastname
+          this.editPatientsData.email = patient.email
+          this.editPatientsData.phone= patient.phone
+          this.editPatientsData.birthday= patient.birthday
+          this.editPatientsData.age = patient.age
+          this.editPatientsData.gender = patient.gender
+          this.editPatientsData.address = patient.address
+          this.editPatientsData.treatment = patient.treatment
+          this.editPatientsData.blood = patient.blood
           this.dialogEdit = true
       }, 
       async editar () {
