@@ -1,192 +1,192 @@
 <template>
-    
-  <v-row>
-  <v-data-table
-      :headers="headers"
-      :items="patients"
-      elevation="2"
-  >
-  <template #[`item.Acciones`]="{ item }">
-      <v-tooltip top>
-          <template v-slot:activator="{on, attrs}">
-              <v-btn
-                  color="red"
-                  icon 
-                  @click="deletePatients(item.email)"
-                  v-bind="attrs"
-                  v-on="on"
-              >
-              <v-icon>mdi-account-minus</v-icon>
-              </v-btn>
-          </template>
-          <span>
-              Eliminar el paciente{{ item.name }}
-          </span>
-      </v-tooltip>
-
-      <v-tooltip top>
-          <template v-slot:activator="{on, attrs}">
-              <v-btn
-                  color="#3e68ff"
-                  icon 
-                  @click="editPatients(item.email)"
-                  v-bind="attrs"
-                  v-on="on"
-              >
-              <v-icon>mdi-account-edit</v-icon>
-              </v-btn>
-          </template>
-          <span>
-              Editar el pacientes {{ item.name }}
-          </span>
-      </v-tooltip>
-  </template> 
-
-  </v-data-table>
-  <v-dialog
-    v-model="dialogEdit"
-    max-width="600"
-  >
-    <v-card>
-      <v-card-title class="text-h5">
-        Editar Pacientes
-      </v-card-title>
-
-    <div class="contenedor" style="margin:20px" >
-        <v-container>
-            <v-form ref="frmRegistro" v-model="frmRegistro">
-                <v-row style="width: 100%;">
-                    <v-col cols="12" style="text-align: center;">
-                        <p class="formTit">Add new patient</p>
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
-                    <v-col>
-                        <p>First name: </p>
-                        <input type="text" class="cajas" v-model="editPatientsData.name">
-                    </v-col>
-                    <v-col>
-                        <p>Lastname </p>
-                        <input type="text" class="cajas" v-model="editPatientsData.lastname" >
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <p>Email: </p>
-                        <input type="email" class="cajas" v-model="editPatientsData.email"> 
-                    </v-col>
-                    <v-col>
-                        <p>Mobile </p>
-                        <input type="text" class="cajas" v-model="editPatientsData.phone" >
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
-                    <v-col cols="4">
-                        <p>Date of birth </p>
-                        <input type="date" class="cajasB" v-model="editPatientsData.birthday">
-                    </v-col>
-                    <v-col cols="4">
-                        <p>Age </p>
-                        <input type="number" class="cajasC" v-model="editPatientsData.age">  
-                    </v-col>
-                    <v-col cols="4">
-                        <p>Gender</p>
-                        <v-radio-group  v-model="editPatientsData.gender">
-                            <v-radio
-                                label="Male"
-                                value="Male"
-                            ></v-radio>
-                            <v-radio
-                                label="Female"
-                                value="Female"
-                            ></v-radio>
-                            <v-radio
-                                label="Other"
-                                value="Other"
-                            ></v-radio>
-                        </v-radio-group>
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
-                    <v-col>
-                        <p> Address </p>
-                        <input type="text" class="cajasA" v-model="editPatientsData.address">
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
-                    <v-col>
-                        <p>Treatment </p>
-                        <input type="text" class="cajasP" v-model="editPatientsData.treatment">
-                    </v-col>
-                </v-row>
-                <v-row align="center">
-                    <v-col>
-                        <p>Blood Type: </p>
-                        <input type="text" class="cajas" v-model="editPatientsData.blood">
-                    </v-col>
-                </v-row>
-            </v-form>
-        </v-container>
-    </div>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-
-        <v-btn
-          color="green darken-1"
-          text
-          @click="dialogEdit = false"
+    <v-row>
+        <v-data-table
+            :headers="headers"
+            :items="patients"
+            elevation="2"
+            class="tabla1"
         >
-          Cancelar
-        </v-btn>
+        <template #[`item.Acciones`]="{ item }">
+            <v-tooltip top>
+                <template v-slot:activator="{on, attrs}">
+                    <v-btn
+                        color="red"
+                        icon 
+                        @click="deletePatients(item.email)"
+                        v-bind="attrs"
+                        v-on="on"
+                    >
+                    <v-icon>mdi-account-minus</v-icon>
+                    </v-btn>
+                </template>
+                <span>
+                    Eliminar el paciente{{ item.name }}
+                </span>
+            </v-tooltip>
 
-        <v-btn
-          color="#3e68ff"
-          text
-          @click="editar()"
-        >
-          Editar
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+            <v-tooltip top>
+                <template v-slot:activator="{on, attrs}">
+                    <v-btn
+                        color="#3e68ff"
+                        icon 
+                        v-bind="attrs"
+                        @click="$event => editPatients(item)"
+                        v-on="on"
+                    >
+                    <v-icon>mdi-account-edit</v-icon>
+                    </v-btn>
+                </template>
+                <span>
+                    Editar el pacientes {{ item.name }}
+                </span>
+            </v-tooltip>
+        </template> 
+        </v-data-table>
 
-  <v-dialog
-    v-model="dialog"
-    max-width="290"
-  >
-    <v-card>
-      <v-card-title class="text-h5">
-        Borrar Pacientes
-      </v-card-title>
+    <v-dialog
+        v-model="dialogEdit"
+        max-width="600"
+    >
+        <v-card >
+        <v-card-title class="text-h5">
+            Editar Pacientes
+        </v-card-title>
 
-      <v-card-text>
-        ¿Estás seguro que quieres editar el paciente?
-      </v-card-text>
+        <div class="contenedor" style="margin:20px" >
+            <v-card-text>
+                <v-form ref="frmRegistro" v-model="frmRegistro">
+                    <v-row style="width: 100%;">
+                        <v-col cols="12" style="text-align: center;">
+                            <p class="formTit">Add new patient</p>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" >
+                        <v-col>
+                            <p>First name: </p>
+                            <input type="text" class="cajas" v-model="editPatientsData.name">
+                        </v-col>
+                        <v-col>
+                            <p>Lastname </p>
+                            <input type="text" class="cajas" v-model="editPatientsData.lastname" >
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col>
+                            <p>Email: </p>
+                            <input type="email" class="cajas" v-model="editPatientsData.email"> 
+                        </v-col>
+                        <v-col>
+                            <p>Mobile </p>
+                            <input type="text" class="cajas" v-model="editPatientsData.phone" >
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" >
+                        <v-col cols="4">
+                            <p>Date of birth </p>
+                            <input type="date" class="cajasB" v-model="editPatientsData.birthday">
+                        </v-col>
+                        <v-col cols="4">
+                            <p>Age </p>
+                            <input type="number" class="cajasC" v-model="editPatientsData.age">  
+                        </v-col>
+                        <v-col cols="4">
+                            <p>Gender</p>
+                            <v-radio-group  v-model="editPatientsData.gender">
+                                <v-radio
+                                    label="Male"
+                                    value="Male"
+                                ></v-radio>
+                                <v-radio
+                                    label="Female"
+                                    value="Female"
+                                ></v-radio>
+                                <v-radio
+                                    label="Other"
+                                    value="Other"
+                                ></v-radio>
+                            </v-radio-group>
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" >
+                        <v-col>
+                            <p> Address </p>
+                            <input type="text" class="cajasA" v-model="editPatientsData.address">
+                        </v-col>
+                    </v-row>
+                    <v-row align="center" >
+                        <v-col>
+                            <p>Treatment </p>
+                            <input type="text" class="cajasP" v-model="editPatientsData.treatment">
+                        </v-col>
+                    </v-row>
+                    <v-row align="center">
+                        <v-col>
+                            <p>Blood Type: </p>
+                            <input type="text" class="cajas" v-model="editPatientsData.blood">
+                        </v-col>
+                    </v-row>
+                </v-form>
+            </v-card-text>
+        </div>
 
-      <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-card-actions>
+            <v-spacer></v-spacer>
 
-        <v-btn
-          color="green darken-1"
-          text
-          @click="dialog = false"
-        >
-          Cancelar
-        </v-btn>
+            <v-btn
+            color="green darken-1"
+            text
+            @click="$event => dialogEdit = false"
+            >
+            Cancelar
+            </v-btn>
 
-        <v-btn
-          color="green darken-1"
-          text
-          @click="borrar()"
-        >
-          Borrar
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+            <v-btn
+            color="#3e68ff"
+            text
+            @click="event=>editar()"
+            >
+            Editar
+            </v-btn>
+        </v-card-actions>
+        </v-card>
+    </v-dialog>
 
-  </v-row>
+    <v-dialog
+        v-model="dialog"
+        max-width="290"
+    >
+        <v-card>
+        <v-card-title class="text-h5">
+            Borrar Pacientes
+        </v-card-title>
+
+        <v-card-text>
+            ¿Estás seguro que quieres editar el paciente?
+        </v-card-text>
+
+        <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn
+            color="green darken-1"
+            text
+            @click="$event => dialog = false"
+            >
+            Cancelar
+            </v-btn>
+
+            <v-btn
+            color="green darken-1"
+            text
+            @click="$event =>borrar()"
+            >
+            Borrar
+            </v-btn>
+        </v-card-actions>
+        </v-card>
+    </v-dialog>
+
+    </v-row>
 </template>
 
 <style>
@@ -195,6 +195,30 @@
     height: 897px;
     border: 1px solid #000;
     padding: 70px;
+}
+
+#tarjeta{
+    width: 1011px;
+    height: 897px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    border: 2px solid var(--primary-green, #4FB783);
+    background: var(--gray-whte, #FFF);
+}
+
+.contenedorDatos{
+    width: 1119px;
+    height: 767px;
+}
+.contenedor1 {
+    width: 1139px;
+    height: 1002px;
+    flex-shrink: 0;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* O ajusta la altura según tus necesidades */
 }
 .formularioT {
     font-family: Open;
@@ -227,7 +251,7 @@ export default {
           editPatientsData: {}, 
           dialogEdit: false,
           reglas: {
-              requerido: value => !!value || 'Campo Requerido', 
+              requerido: value => !!value || 'Campo Requerido'
           }, 
           frmRegistro: false
       }
@@ -281,19 +305,19 @@ export default {
           this.dialog = false
          // console.log('@@@ respuesta => ', rawResponse)
       }, 
-      editPatients (user) {
-          console.log('@@@ patient=>', user)
+      editPatients (patient) {
+          console.log('@@@ patient=>', patient)
 
-          this.editPatientsData.name = user.name
-          this.editPatientsData.lastname = user.lastname
-          this.editPatientsData.email = user.email
-          this.editPatientsData.phone= user.phone
-          this.editPatientsData.birthday= user.birthday
-          this.editPatientsData.age = user.age
-          this.editPatientsData.gender = user.gender
-          this.editPatientsData.address = user.address
-          this.editPatientsData.treatment = user.treatment
-          this.editPatientsData.blood = user.blood
+          this.editPatientsData.name = patient.name
+          this.editPatientsData.lastname = patient.lastname
+          this.editPatientsData.email = patient.email
+          this.editPatientsData.phone= patient.phone
+          this.editPatientsData.birthday= patient.birthday
+          this.editPatientsData.age = patient.age
+          this.editPatientsData.gender = patient.gender
+          this.editPatientsData.address = patient.address
+          this.editPatientsData.treatment = patient.treatment
+          this.editPatientsData.blood = patient.blood
           this.dialogEdit = true
       }, 
       async editar () {
