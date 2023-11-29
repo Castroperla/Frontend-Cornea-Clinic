@@ -4,7 +4,7 @@
   return {
     items: [
       { text: 'Dashboard', icon:'mdi-view-dashboard' },
-      { text: 'Appoiments', icon:'mdi mdi-notebook-plus' },
+      { text: 'Appointments', icon:'mdi mdi-notebook-plus' },
       { text: 'Patients', icon:'mdi-account-group-outline' },
       { text: 'Schedule', icon:'mdi mdi-book-clock' }
     ]
@@ -21,8 +21,16 @@
     width="300" 
   >
     <v-list>
-      <v-list-item class="d-flex align-center">
-        <v-list-item-avatar>
+      <v-list-item>
+        <v-list-item-content>
+          <v-img :src="require('@/assets/img/clinica.png')"></v-img>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list-item>
+        <v-list-item-avatar size="128">
           <v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
         </v-list-item-avatar>
       </v-list-item>
