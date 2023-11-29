@@ -1,30 +1,29 @@
 <template >
     <div class="contenedor" style="margin:20px" >
-        <v-container>
-            <v-form ref="frmRegistro" v-model="frmRegistro">
-                <v-row style="width: 100%;">
+                <v-row >
                     <v-col cols="12" style="text-align: center;">
                         <p class="formTit">Add new patient</p>
                     </v-col>
                 </v-row>
+            <v-form ref="frmRegistro" v-model="frmRegistro">
                 <v-row align="center" >
                     <v-col>
                         <p>First name: </p>
-                        <input type="text" class="cajas" v-model="name" placeholder="Name">
+                        <input type="text" class="cajas" v-model="name" placeholder="Name" :rules="[reglas.requerido]">
                     </v-col>
                     <v-col>
                         <p>Lastname </p>
-                        <input type="text" class="cajas" v-model="lastname" >
+                        <input type="text" class="cajas" v-model="lastname" :rules="[reglas.requerido]">
                     </v-col>
                 </v-row>
                 <v-row>
                     <v-col>
                         <p>Email: </p>
-                        <input type="email" class="cajas" v-model="email"> 
+                        <input type="email" class="cajas" v-model="email" :rules="[reglas.requerido]"> 
                     </v-col>
                     <v-col>
                         <p>Mobile </p>
-                        <input type="text" class="cajas" v-model="phone" >
+                        <input type="text" class="cajas" v-model="phone" :rules="[reglas.requerido]">
                     </v-col>
                 </v-row>
                 <v-row align="center" >
@@ -34,11 +33,11 @@
                     </v-col>
                     <v-col cols="4">
                         <p>Age </p>
-                        <input type="number" class="cajasC" v-model="age">  
+                        <input type="number" class="cajasC" v-model="age" :rules="[reglas.requerido]">  
                     </v-col>
                     <v-col cols="4">
                         <p>Gender</p>
-                        <v-radio-group  v-model="gender" row>
+                        <v-radio-group  v-model="gender" row :rules="[reglas.requerido]">
                             <v-radio
                                 label="Male"
                                 value="Male"
@@ -73,12 +72,11 @@
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-btn id="btnPatients" @click="registraPacientes"> 
+                    <v-btn id="btnPatients"  @click="registraPacientes"> 
                         <p >Add patients</p>
                     </v-btn>
                 </v-row>
             </v-form>
-        </v-container>
     </div>
 </template>
 
@@ -155,16 +153,25 @@
     width: 870px;
     height: 60px; 
     flex-shrink: 0; 
+    text-transform: none;
+    color: var(--gray-whte, #FFF);
+    /* paragraph/t2-reg h1 */
+    font-family: Open Sans;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 27px; /* 135% */
+    letter-spacing: 0.4px;
 }
 .contenedor{
-    width: 1011px;
-    height: 897px;
+    width: 1050px;
+    height: 1200px;
     border: 1px solid #000;
     padding: 70px;
 }
 .titulo{
     width: 1200px;
-    height: 1100px;
+    height: 1000px;
     border-radius: 15px;
     background: var(--gray-whte, #FFF);
     padding: 70px;
