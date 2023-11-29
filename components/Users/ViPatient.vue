@@ -1,7 +1,7 @@
 <template>
     <v-row>
         <v-row style="text-align: right;">
-            <v-col cols="1" style="text-align: center;">
+            <v-col cols="2" style="text-align: center;">
                 <p class="barra">Show</p> 
             </v-col>
             <v-col cols="2">
@@ -17,7 +17,6 @@
                     <input type="text" align="center" v-model="search" placeholder="Search patients" /> 
                     </div>
                 </v-col>
-                   
                 <v-col>
                     <v-btn id="registerpat">Add New Patient +</v-btn>
                 </v-col>
@@ -321,7 +320,7 @@
     line-height: 22px; /* 137.5% */
     letter-spacing: 0.32px;
     }
-.formTit {
+    .formTit {
     font-family: Open;
     font-size: 20px; 
     font-style: normal;
