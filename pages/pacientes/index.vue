@@ -1,15 +1,10 @@
 <template>
     <div class="ma-5">
         <v-row>
-        <v-col cols="6">
+        <v-col cols="12">
             <vi-patient/>
         </v-col>
     </v-row>
-    <v-row>
-        <v-col cols="5">
-            <pat-register />
-        </v-col>
-        </v-row>
     </div>
 </template>
 

@@ -1,27 +1,19 @@
 <template>
+   <v-container fluid>
     <v-row>
-        <v-row style="text-align: right;">
-            <v-col cols="2" style="text-align: center;">
-                <p class="barra">Show</p> 
-            </v-col>
-            <v-col cols="2">
-                <v-btn id="registerpat2">Recent <span class="mdi mdi-menu-down"></span> </v-btn>
-            </v-col>
-            <v-col cols="2">
-                <p class="barra">Patients</p> 
-            </v-col>
-        </v-row>
-            <v-row>
-                <v-col>
-                    <div class="search-wrapper panel-heading col-sm-12" id="cajita" >
-                    <input type="text" align="center" v-model="search" placeholder="Search patients" /> 
-                    </div>
-                </v-col>
-                <v-col>
-                    <v-btn id="registerpat">Add New Patient +</v-btn>
-                </v-col>
-            </v-row>
-
+        <v-dialog v-model="dialog" max-width="500px">
+            <template v-slot:activator="{ on }">
+                <v-btn id="registerpat" class="mb-2" v-on="on">Add new patient</v-btn>
+            </template>
+        </v-dialog>
+        <v-spacer></v-spacer>
+        <v-text-field
+            v-model="search"
+            append-icon="mdi mdi-account-search-outline"
+            label="Search"
+            single-line
+            hide-details
+        ></v-text-field>
             
         <v-data-table 
             :headers="headers"
@@ -204,6 +196,7 @@
     </v-dialog>
 
     </v-row>
+   </v-container>
 </template>
 
 <style>
@@ -337,6 +330,7 @@ export default {
     layout: 'dashboard',
   data() {
       return{
+          search: '',
           headers: [
               { text: 'Name', align: 'center', sortable: true, value: 'name'}, 
               { text: 'Mobile', align: 'center', sortable: false, value: 'phone'},
