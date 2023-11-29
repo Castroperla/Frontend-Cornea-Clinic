@@ -1,36 +1,19 @@
 <template>
     <v-row>
-        <v-row style="text-align: right;">
-            <v-row style="margin-bottom: 16px;">
-                <p>Doctor > Appointments</p>
-                <v-col cols="5"> <span class="mdi mdi-bell"></span> </v-col>
-                <v-btn class="register"> Available </v-btn>
-            </v-row>
-            <v-row class="ma-7"></v-row>
-            <v-row style="margin-bottom: 16px;">
-                <v-col cols="2" style="text-align: center;">
-                    <p class="barra">Show</p> 
-                </v-col>
-                <v-col cols="2">
-                    <v-btn id="registerpat2">Recent <span class="mdi mdi-menu-down"></span> </v-btn>
-                </v-col>
-                <v-col cols="7">
-                    <p class="barra">Appointments</p> 
-                </v-col>
-            </v-row>
-        </v-row>
-            <v-row>
-                <v-col>
-                    <div class="search-wrapper panel-heading col-sm-12" id="cajita" >
-                    <input type="text" align="center" v-model="search" placeholder="Search" /> 
-                    </div>
-                </v-col>
-                <v-col>
-                    <v-btn id="circulo"> + </v-btn>
-                </v-col>
-            </v-row>
-
-            
+        <v-dialog v-model="dialog" max-width="500px">
+            <template v-slot:activator="{ on }">
+                <v-btn id="registerpat" class="mb-2" v-on="on">Add new patient</v-btn>
+            </template>
+        </v-dialog>
+        <v-spacer></v-spacer>
+        <v-text-field
+            v-model="search"
+            append-icon="mdi mdi-account-search-outline"
+            label="Search"
+            single-line
+            hide-details
+        ></v-text-field>
+    
         <v-data-table 
             :headers="headers"
             :items="citas"
@@ -210,23 +193,8 @@
 </template>
 
 <style>
-#circulo {
-    width: 35px; /* Ajusta el tamaño según tus necesidades */
-    height: 40px; /* Ajusta el tamaño según tus necesidades */
-    border-radius: 50%; /* Hace que el botón sea redondo */
-    border: 0.834px solid var(--primary-green, #4FB783);
-    background: var(--secondary-lightest-green, #EBFFF5);
-    color: #000; /* Cambia el color del texto según tus necesidades */
-    cursor: pointer;
-    outline: none; /* Elimina el contorno al hacer clic */
-    font-size: 16px; 
-    font-family: Open Sans;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22px; /* 137.5% */
-    letter-spacing: 0.32px;
-}
+
+
 #registerpat {
     display: inline-flex;
     padding: 7.505px 16.678px;
@@ -248,34 +216,6 @@
     letter-spacing: 0.32px;
 }
 
-#registerpat2 {
-    display: inline-flex;
-    padding: 6.505px 16.678px;
-    align-items: flex-start;
-    gap: 8.339px;
-    border-radius: 12.508px;
-    border: 0.834px solid var(--primary-green, #4FB783);
-    background: var(--secondary-lightest-green, #EBFFF5);
-    text-transform: none;
-    color: #000;
-    text-align: center;
-
-    /* body/t2-reg h1 */
-    font-family: Open Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22px; /* 137.5% */
-    letter-spacing: 0.32px;
-}
-#cajita {
-    width: 400px;
-    height: 35px;   
-    top: 10px;
-    left: 15px;
-    border: 0.50px solid var(--primary-green, #4FB783);
-    border-radius: 12.508px;
-}
 .contenedor{
     width: 1011px;
     height: 897px;
