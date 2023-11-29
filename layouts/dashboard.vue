@@ -1,8 +1,11 @@
 <script>
    import draweVue from '~/components/Dashboard/drawe.vue';
+   import navbarVue from '~/components/Dashboard/navbar.vue';
+   
    export default {
     components: {
-        draweVue
+        draweVue,
+        navbarVue
     }, data () {
         return {
 
@@ -14,6 +17,7 @@
 <template>
     <v-app>
         <draweVue/>
+        <navbarVue/>
             <v-main>
                 <Nuxt />
             </v-main> 
