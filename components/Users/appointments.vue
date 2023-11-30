@@ -337,12 +337,12 @@ export default {
   },
   methods: {
       async loadUsers () {
-          const citas = await fetch('http://localhost:5000/get-appointment')
-          const data = await appointment.json()
+          const citas = await fetch('http://localhost:5000/get-appointments')
+          const data = await citas.json()
           if (data.alert === 'success'){
-              this.appointment = data.appointment
+              this.citas = data.citas
           }
-          console.log('@@patients =>', appointment, data)
+          console.log('@@patients =>', citas, data)
       }, 
       deleteappointment (email)  {
           this.email = email
