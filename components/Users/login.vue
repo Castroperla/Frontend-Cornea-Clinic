@@ -1,86 +1,97 @@
+<template>
+  <v-app id="login">
+    <v-container fluid fill-height>
+      <v-layout align-center justify-center>
+        <v-flex xs12 sm8 md4 lg4>
+          <v-card class="elevation-1 pa-3">
+            <v-card-text>
+              <div class="layout column align-center">
+                <img src="../../assets/img/clinica.png" alt="clinica logo" width="300" height="auto">
+                <h1 class="flex my-4" style="color: #4FB783!important;">CORNEA Clinic</h1>
+              </div>
+              <v-form 
+                v-model="isValid" 
+                ref="formLogin"
+                >
+                <v-text-field
+                  append-icon="mdi mdi-account"
+                  name="login"
+                  label="Login"
+                  type="text"
+                  v-model="userEmail"
+                  :error="error"
+                  :rules="[rules.vacio]"/>
+                <v-text-field
+                  :type="hidePassword ? 'password' : 'text'"
+                  :append-icon="hidePassword ? 'mdi mdi-eye-off' : 'mdi mdi-eye'"
+                  name="password"
+                  label="Password"
+                  id="password"
+                  :rules="[rules.cantidad]"
+                  v-model="password"
+                  :error="error"
+                  @click:append="hidePassword = !hidePassword"/>
+              </v-form>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn block color="#4FB783" style="color: white;" @click="login" :loading="loading">Login</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+    <v-snackbar
+      v-model="showResult"
+      :timeout="2000"
+      top>
+      {{ result }}
+    </v-snackbar>
+  </v-app>
+</template>
+
 <script>
 export default {
-  name: "Login",
   data() {
     return {
-      username: '',
+      loading: false,
+      userEmail: '',
       password: '',
       isValid: false,
+      hidePassword: true,
+      error: false,
+      showResult: false,
+      result: '',
       rules: {
         vacio: value => !!value || 'Campo requerído',
         cantidad: value => value.length >= 5 || 'Mínimo 5 caractéres'
       }
-    };
+    }
   },
+
   methods: {
-    Login () {
+    login() {
       const valid = this.$refs.formLogin.validate() 
-      if(valid) {
-        //ruta hacia pagina
+      if (valid) {
         this.$router.push('/pacientes')
-      } 
-      else {
-        //alerta 
-        alert('Datos incorrectos')
+      } else {
+        this.error = true;
+        this.result = "Campos vacíos o incorrectos.";
+        this.showResult = true;
       }
     }
   }
 }
 </script>
 
-<template>
-  <v-app>
-    <v-main class="login-page">
-      <v-container fluid fill-height>
-        <v-row align="center" justify="center">
-          <v-col cols="12" sm="8" md="4">
-            <v-card class="elevation-12">
-              <v-toolbar dark color="#4FB783">
-                <v-toolbar-title class="text-h3 text-center font-weight-bold">
-                  Iniciar Sesión
-                </v-toolbar-title>
-              </v-toolbar>
-
-              <v-card-text>
-                <v-form v-model="isValid" ref="formLogin">
-                  <v-text-field
-                    v-model="username"
-                    name="username"
-                    label="Correo Electrónico"
-                    type="text"
-                    placeholder="Escribe tu correo electrónico"
-                    required
-                    :rules="[rules.vacio]"
-                  ></v-text-field>
-
-                  <v-text-field
-                    v-model="password"
-                    name="password"
-                    label="Contraseña"
-                    type="password"
-                    placeholder="Escribe tu contraseña"
-                    required
-                    :rules="[rules.cantidad]"
-                  ></v-text-field>
-                </v-form>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-btn color="success" @click="Login">Iniciar Sesión</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-main>
-  </v-app>
- </template>
-
-<style scoped>
-.login-page {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+<style scoped >
+  #login {
+    height: 50%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    z-index: 0;
+  }
 </style>
