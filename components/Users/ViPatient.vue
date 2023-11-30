@@ -61,98 +61,68 @@
         <!--MODAL PARA EDITAR PACIENTE-->
     <v-dialog
         v-model="dialogEdit"
-        max-width="1200"
+        max-width="800"
     >
-        <v-card >
-            <v-card-text class="contenedor1">
-                <v-form ref="frmRegistro" v-model="frmRegistro">
-                    <v-row align="center">
-                        <v-col cols="12" style="text-align: center;">
-                            <p class="formTit">Edit patient</p>
-                        </v-col>
-                    </v-row>
-                    <v-row align="center" >
-                        <v-col>
-                            <p>First name: </p>
-                            <input type="text" class="cajas" v-model="editPatientsData.name">
-                        </v-col>
-                        <v-col>
-                            <p>Lastname </p>
-                            <input type="text" class="cajas" v-model="editPatientsData.lastname" >
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col>
-                            <p>Email: </p>
-                            <input type="email" class="cajas" v-model="editPatientsData.email"> 
-                        </v-col>
-                        <v-col>
-                            <p>Mobile </p>
-                            <input type="text" class="cajas" v-model="editPatientsData.phone" >
-                        </v-col>
-                    </v-row>
-                    <v-row align="center" >
-                        <v-col cols="4">
-                            <p>Date of birth </p>
-                            <input type="date" class="cajasB" v-model="editPatientsData.birthday">
-                        </v-col>
-                        <v-col cols="4">
-                            <p>Age </p>
-                            <input type="number" class="cajasC" v-model="editPatientsData.age">  
-                        </v-col>
-                        <v-col cols="4">
-                            <p>Gender</p>
-                            <v-radio-group  v-model="editPatientsData.gender">
-                                <v-radio
-                                    label="Male"
-                                    value="Male"
-                                ></v-radio>
-                                <v-radio
-                                    label="Female"
-                                    value="Female"
-                                ></v-radio>
-                                <v-radio
-                                    label="Other"
-                                    value="Other"
-                                ></v-radio>
-                            </v-radio-group>
-                        </v-col>
-                    </v-row>
-                    <v-row align="center" >
-                        <v-col>
-                            <p> Address </p>
-                            <input type="text" class="cajasA" v-model="editPatientsData.address">
-                        </v-col>
-                    </v-row>
-                    <v-row align="center" >
-                        <v-col>
-                            <p>Treatment </p>
-                            <input type="text" class="cajasP" v-model="editPatientsData.treatment">
-                        </v-col>
-                    </v-row>
-                    <v-row align="center">
-                        <v-col>
-                            <p>Blood Type: </p>
-                            <input type="text" class="cajas" v-model="editPatientsData.blood">
-                        </v-col>
-                    </v-row>
-                </v-form>
-            </v-card-text>
+    <v-card>
+      <v-card-title class="text-h4" style="color:#4FB783;">
+        Edit Patient
+      </v-card-title>
+
+      <v-card-text>
+        <v-form ref="frmRegistro" v-model="frmRegistro">
+          <v-container>
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-text-field label="First Name" v-model="editPatientsData.name"></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field label="Last Name" v-model="editPatientsData.lastname"></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field label="Email" type="email" v-model="editPatientsData.email"></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field label="Mobile" v-model="editPatientsData.phone"></v-text-field>
+              </v-col>
+              <v-col cols="12" md="4">
+                <v-text-field label="Date of Birth" type="date" v-model="editPatientsData.birthday"></v-text-field>
+              </v-col>
+              <v-col cols="12" md="4">
+                <v-text-field label="Age" type="number" v-model="editPatientsData.age"></v-text-field>
+              </v-col>
+              <v-col cols="12" md="4">
+                <v-select label="Gender" v-model="editPatientsData.gender" :items="['Male', 'Female', 'Other']"></v-select>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Address" v-model="editPatientsData.address"></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Treatment" v-model="editPatientsData.treatment"></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Blood Type" v-model="editPatientsData.blood"></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+      </v-card-text>
 
         <v-card-actions>
             <v-spacer></v-spacer>
 
             <v-btn
-            color="green darken-1"
-            text
+            style="color: white;"
+            color="red"
+            rounded
             @click="$event => dialogEdit = false"
             >
             Cancelar
             </v-btn>
 
             <v-btn
-            color="#3e68ff"
-            text
+            style="color: white;"
+            color="#4FB783"
+            rounded
             @click="event=>editar()"
             >
             Editar
@@ -178,7 +148,7 @@
             <v-spacer></v-spacer>
 
             <v-btn
-            color="green darken-1"
+            color="red darken-1"
             text
             @click="$event => dialog = false"
             >
