@@ -3,7 +3,7 @@
     <v-row>
         <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on }">
-                <v-btn id="registerpat" class="mb-2" v-on="on">Add new patient</v-btn>
+                <v-btn @click="agregarPatient" id="registerpat" class="mb-2" v-on="on">Add new patient</v-btn>
             </template>
         </v-dialog>
         <v-spacer></v-spacer>
@@ -58,6 +58,7 @@
         </template> 
         </v-data-table>
 
+        <!--MODAL PARA EDITAR PACIENTE-->
     <v-dialog
         v-model="dialogEdit"
         max-width="1200"
@@ -159,18 +160,18 @@
         </v-card-actions>
         </v-card>
     </v-dialog>
-
+         <!--MODAL PARA ELIMINAR PACIENTE-->
     <v-dialog
         v-model="dialog"
         max-width="290"
     >
         <v-card>
         <v-card-title class="text-h5">
-            Borrar Pacientes
+            Eliminar Paciente
         </v-card-title>
 
         <v-card-text>
-            ¿Estás seguro que quieres editar el paciente?
+            ¿Estás seguro que quieres eliminar el paciente?
         </v-card-text>
 
         <v-card-actions>
@@ -187,14 +188,13 @@
             <v-btn
             color="green darken-1"
             text
-            @click="$event =>borrar()"
+            @click="$event=>borrar()"
             >
             Borrar
             </v-btn>
         </v-card-actions>
         </v-card>
     </v-dialog>
-
     </v-row>
    </v-container>
 </template>
