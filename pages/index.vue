@@ -8,9 +8,9 @@ export default {
   }
 };
 </script>
-
 <template>
-  <login class=""/>
+  <div fluid>
+    <login/>
+  </div>  
 </template>
-
 
