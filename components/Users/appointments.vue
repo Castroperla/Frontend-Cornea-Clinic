@@ -2,7 +2,7 @@
     <v-row>
         <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on }">
-                <v-btn id="registerpat" class="mb-2" v-on="on">Add new patient</v-btn>
+                <v-btn id="registerpat" class="mb-2" v-on="on">Add new cita</v-btn>
             </template>
         </v-dialog>
         <v-spacer></v-spacer>
@@ -368,7 +368,7 @@ export default {
          // console.log('@@@ respuesta => ', rawResponse)
       }, 
       editAppointment (cita) {
-          console.log('@@@ patient=>', appointment)
+          console.log('@@@ patient=>', cita)
 
           this.editAppointmentData.name = cita.name
           this.editAppointmentData.lastname = cita.lastname
