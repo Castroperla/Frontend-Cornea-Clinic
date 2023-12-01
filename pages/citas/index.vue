@@ -1,6 +1,6 @@
 <template>
     <div class="ma-10">
-    <appointments/>
+        <appointments/>
     </div>
 </template>
 
