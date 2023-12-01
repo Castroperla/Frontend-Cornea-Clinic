@@ -73,7 +73,7 @@ export default {
     login() {
       const valid = this.$refs.formLogin.validate() 
       if (valid) {
-        this.$router.push('/pacientes')
+        this.$router.push('/home')
       } else {
         this.error = true;
         this.result = "Campos vacíos o incorrectos.";

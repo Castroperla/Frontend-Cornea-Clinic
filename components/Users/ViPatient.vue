@@ -3,7 +3,7 @@
     <v-row>
         <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on }">
-                <v-btn @click="agregarPatient" id="registerpat" class="mb-2" v-on="on">Add new patient</v-btn>
+                <v-btn @click="agregarPatient" rounded color="#4FB783" class="mb-2" style="color: white;" v-on="on">Add new patient</v-btn>
             </template>
         </v-dialog>
         <v-spacer></v-spacer>
@@ -170,55 +170,6 @@
 </template>
 
 <style>
-#registerpat {
-    display: inline-flex;
-    padding: 7.505px 16.678px;
-    align-items: flex-start;
-    gap: 8.339px;
-    border-radius: 12.508px;
-    border: 0.834px solid var(--primary-green, #4FB783);
-    background: var(--secondary-lightest-green, #EBFFF5);
-    text-transform: none;
-    color: #000;
-    text-align: center;
-
-    /* body/t2-reg h1 */
-    font-family: Open Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22px; /* 137.5% */
-    letter-spacing: 0.32px;
-}
-
-#registerpat2 {
-    display: inline-flex;
-    padding: 6.505px 16.678px;
-    align-items: flex-start;
-    gap: 8.339px;
-    border-radius: 12.508px;
-    border: 0.834px solid var(--primary-green, #4FB783);
-    background: var(--secondary-lightest-green, #EBFFF5);
-    text-transform: none;
-    color: #000;
-    text-align: center;
-
-    /* body/t2-reg h1 */
-    font-family: Open Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22px; /* 137.5% */
-    letter-spacing: 0.32px;
-}
-#cajita {
-    width: 400px;
-    height: 35px;   
-    top: 10px;
-    left: 15px;
-    border: 0.50px solid var(--primary-green, #4FB783);
-    border-radius: 12.508px;
-}
 .contenedor{
     width: 1011px;
     height: 897px;
@@ -235,22 +186,6 @@
     background: var(--gray-whte, #FFF);
 }
 
-.tabla1{
-    width: 850px;
-    height: 749px;
-    flex-shrink: 0;
-    color: #000;
-    text-align: center;
-
-    /* body/t2-reg h1 
-    font-family: Open;*/
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22px; /* 137.5% */
-    letter-spacing: 0.32px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
 .contenedor1 {
     width: 1139px;
     height: 1002px;
@@ -271,28 +206,6 @@
     text-align: center;
 }
 
-.barra {
-    color: #000;
-    text-align: center;
-
-    /* body/t2-reg h1 */
-    font-family: Open Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 22px; /* 137.5% */
-    letter-spacing: 0.32px;
-    }
-    .formTit {
-    font-family: Open;
-    font-size: 20px; 
-    font-style: normal;
-    font-weight: 400;
-    line-height: 27px;
-    letter-spacing: 0.4px;
-    color: #000;
-    justify-content: center;
-}
 </style>
 
 <script>
