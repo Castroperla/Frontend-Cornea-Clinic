@@ -136,18 +136,18 @@
     >
         <v-card>
         <v-card-title class="text-h5">
-            Borrar citas
+            Eliminar cita
         </v-card-title>
 
         <v-card-text>
-            ¿Estás seguro que quieres editar la cita?
+            ¿Estás seguro que quieres eliminar la cita?
         </v-card-text>
 
         <v-card-actions>
             <v-spacer></v-spacer>
 
             <v-btn
-            color="green darken-1"
+            color="red darken-1"
             text
             @click="$event => dialog = false"
             >
@@ -320,7 +320,7 @@ export default {
           }
           console.log('@@patients =>', citas, data)
       }, 
-      deleteappointment (email)  {
+      deleteAppointment (email)  {
           this.email = email
           this.dialog = true 
       }, 
