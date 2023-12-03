@@ -78,6 +78,7 @@ export default {
         this.error = true;
         this.result = "Campos vacíos o incorrectos.";
         this.showResult = true;
+        alert('Datos incorrectos')
       }
     }
   }

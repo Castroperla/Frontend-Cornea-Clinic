@@ -3,7 +3,7 @@
     <v-row>
         <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on }">
-                <v-btn @click="agregarPatient" rounded color="#4FB783" class="mb-2" style="color: white;" v-on="on">Add new patient</v-btn>
+                <v-btn @click="Agregar()" rounded color="#4FB783" class="mb-2" style="color: white;" v-on="on">Add new patient</v-btn>
             </template>
         </v-dialog>
         <v-spacer></v-spacer>
@@ -45,7 +45,7 @@
                         color="#3e68ff"
                         icon 
                         v-bind="attrs"
-                        @click="$event => editPatients(item)"
+                        @click="editPatients(item)"
                         v-on="on"
                     >
                     <v-icon>mdi mdi-pencil-outline</v-icon>
@@ -114,7 +114,7 @@
             style="color: white;"
             color="red"
             rounded
-            @click="$event => dialogEdit = false"
+            @click="dialogEdit = false"
             >
             Cancelar
             </v-btn>
@@ -123,7 +123,7 @@
             style="color: white;"
             color="#4FB783"
             rounded
-            @click="event=>editar()"
+            @click="editar()"
             >
             Editar
             </v-btn>
@@ -150,7 +150,7 @@
             <v-btn
             color="red darken-1"
             text
-            @click="$event => dialog = false"
+            @click="dialog = false"
             >
             Cancelar
             </v-btn>
@@ -158,7 +158,7 @@
             <v-btn
             color="green darken-1"
             text
-            @click="$event=>borrar()"
+            @click="borrar()"
             >
             Borrar
             </v-btn>
@@ -316,6 +316,15 @@ export default {
           console.log('res =>', res)
           }
           this.dialogEdit = false
+        }, 
+        Agregar() {
+            const valid = this.$refs.formLogin.validate()
+            if (valid) {
+                //Codigo para cambiar de pagina y registrar 
+                this.$router.push('/Users/patRegister.vue')
+            } else {
+                alert('Error')
+            }
         }
     }
 }
