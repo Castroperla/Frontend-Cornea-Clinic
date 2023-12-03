@@ -56,15 +56,11 @@
             </v-tooltip>
         </template> 
         </v-data-table>
-
+<!--Modal para editar citas-->
         <v-dialog v-model="dialogEdit" max-width="600">
         <v-card>
         <v-card-title class="text-h4" style="color:#4FB783;">
             Edit Appointment
-            <v-spacer></v-spacer>
-            <v-btn icon @click="dialogEdit = false">
-            <v-icon>mdi-close</v-icon>
-            </v-btn>
         </v-card-title>
 
         <v-card-text>
@@ -127,13 +123,13 @@
             style="color: white;"
             color="#4FB783"
             rounded
-            @click="editar">
+            @click="event=>editar()">
             Editar
             </v-btn>
         </v-card-actions>
         </v-card>
     </v-dialog>
-
+<!--Modal elimina pacientes-->
     <v-dialog
         v-model="dialog"
         max-width="290"
