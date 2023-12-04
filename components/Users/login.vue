@@ -35,7 +35,7 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn block color="#4FB783" style="color: white;" @click="login" :loading="loading">Login</v-btn>
+              <v-btn block color="#4FB783" style="color: white;" @click="ingresarSistema" :loading="loading">Login</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -63,14 +63,61 @@ export default {
       showResult: false,
       result: '',
       rules: {
-        vacio: value => !!value || 'Campo requerído',
-        cantidad: value => value.length >= 5 || 'Mínimo 5 caractéres'
+        vacio: value => !!value || 'Required field',
+        cantidad: value => value.length >= 5 || 'Minimum 5 characters'
       }
     }
   },
 
   methods: {
-    login() {
+    async ingresarSistema () {
+      if (!this.userEmail || !this.password || this.userEmail.length === 0 || this.password.length === 0) {
+        alert('Something is wrong, be sure to complete both fields.');
+        return;
+      }
+      if (this.$refs.formLogin){
+        if (this.$refs.formLogin.validate()){
+          const sendData = {
+          email: this.userEmail,
+          password: this.password
+          } 
+          await this.$auth.loginWith('local', {
+            data: sendData
+          }).then((res) => {
+            if (res.data.alert === 'success'){
+              console.log(res)
+              this.$router.push('/home')
+            } else if (res.data.alert === 'Unregistered mail'){
+              console.log(res)
+              this.result = 'Unregistered mail'
+              this.showResult = true
+              setTimeout(() => {
+                this.showResult = false
+              }, 2000)
+            } else if (res.data.alert === 'Incorrect password'){
+              console.log(res)
+              this.result = 'Incorrect password'
+              this.showResult = true
+              setTimeout(() => {
+                this.showResult = false
+              }, 2000)
+            }
+          }).catch((error) => {
+            this.result = 'there was an error'
+            this.showResult = true
+            setTimeout(() => {
+              this.showResult = false
+            }, 2000)
+            console.log(error)
+          })
+        } else {
+          alert('Something is wrong')
+        }
+      } else {
+        alert('Form not found')
+      }
+    },
+    /*login() {
       const valid = this.$refs.formLogin.validate() 
       if (valid) {
         this.$router.push('/home')
@@ -80,7 +127,7 @@ export default {
         this.showResult = true;
         alert('Datos incorrectos')
       }
-    }
+    }*/
   }
 }
 </script>

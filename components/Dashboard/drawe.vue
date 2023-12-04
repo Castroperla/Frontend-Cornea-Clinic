@@ -1,16 +1,21 @@
 <script>
-  export default {
+export default {
   data() {
-  return {
-    items: [
-      { text: 'Dashboard', icon:'mdi-view-dashboard' },
-      { text: 'Appointments', icon:'mdi mdi-notebook-plus' },
-      { text: 'Patients', icon:'mdi-account-group-outline' },
-      { text: 'Schedule', icon:'mdi mdi-book-clock' }
-    ]
+    return {
+      items: [
+        { text: 'Dashboard', icon: 'mdi-view-dashboard', route: '/home' },
+        { text: 'Appointments', icon: 'mdi mdi-notebook-plus', route: '/citas' },
+        { text: 'Patients', icon: 'mdi-account-group-outline', route: '/pacientes' },
+        { text: 'Schedule', icon: 'mdi mdi-book-clock', route: '/toDoList' }
+      ]
+    };
+  },
+  methods: {
+    redirectTo(route) {
+      this.$router.push(route)
+    }
   }
-}
-}
+};
 </script>
 
 <template>
@@ -21,7 +26,7 @@
     width="300" 
   >
     <v-list>
-      <v-list-item>
+      <v-list-item >
         <v-list-item-content>
           <v-img :src="require('@/assets/img/clinica.png')"></v-img>
         </v-list-item-content>
@@ -50,14 +55,14 @@
       nav
       dense
     >
-      <v-list-item v-for="(item, i) in items" :key="i" link>
+      <v-list-item v-for="(item, i) in items" :key="i" :to="item.route" link>
         <v-list-item-icon>
             <v-icon>
               {{ item.icon }}
             </v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>
+            <v-list-item-title @click="redirectTo(item.route)">
                 {{ item.text }}
             </v-list-item-title>
           </v-list-item-content>
@@ -65,3 +70,4 @@
     </v-list>
   </v-navigation-drawer>
 </template>
+
