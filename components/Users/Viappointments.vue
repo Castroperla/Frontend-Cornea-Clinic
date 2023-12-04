@@ -16,7 +16,7 @@
     
         <v-data-table 
             :headers="headers"
-            :items="citas"
+            :items="searchResults"
             elevation="2"
             class="tabla1"
         >
@@ -317,6 +317,7 @@ export default {
           const data = await citas.json()
           if (data.alert === 'success'){
               this.citas = data.citas
+              this.searchResults = [...this.citas];
           }
           console.log('@@patients =>', citas, data)
       }, 
@@ -373,6 +374,15 @@ export default {
           console.log('res =>', res)
           }
           this.dialogEdit = false
+        }, 
+       customFilter(item, search) {
+            const lowerCaseSearch = search.toLowerCase();
+
+            return (
+            item.name.toLowerCase().includes(lowerCaseSearch) ||
+            item.email.toLowerCase().includes(lowerCaseSearch) ||
+            item.phone.toLowerCase().includes(lowerCaseSearch)
+            );
         }
     }
 }
