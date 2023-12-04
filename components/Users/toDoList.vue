@@ -4,7 +4,7 @@
       <v-flex>
 
         <v-row>
-          <!--CALENDARIO Y LISTA DE TAREAS PENDIENTES-->
+          <!--CALENDAR AND TO-DO LIST-->
           <v-col cols="7">
               <div>
                 <v-calendar v-model="selectedDate" color="#4FB783">
@@ -14,7 +14,7 @@
               <br>
               <div>
                 <v-row>
-                  <h4 style="padding-left: 15px;">Tareas Pendientes</h4>
+                  <h4 style="padding-left: 15px;">Pending Tasks</h4>
                 </v-row>
                 <v-row v-if="tasksSent.length > 0">
                   <ul>
@@ -53,39 +53,41 @@
       </v-flex>
     </v-layout>
 
-    <!--MODAL REGISTRAR TAREAS-->
+    <!--MODAL REGISTER TASKS-->
     <v-dialog v-model="modal" max-width="500px">
         <v-card>
-          <v-card-title style="text-align: center; justify-content: center;">Bienvendo al registro de tareas
+          <v-card-title style="text-align: center; justify-content: center;">Welcome to the task log
             <v-icon  @click="modal = false" style="margin-left: 70px; color: rgb(123, 123, 123); background-color: transparent!important;">mdi-close</v-icon>
           </v-card-title>
 
           <v-card-text style="text-align: center; justify-content: center;">
             <!--MOSTRAR FECHA SELECCIONADA-->
             <div v-if="selectedDate">
-              <p style="color:black;">La fecha seleccionada para registrar sus tareas es:  {{ selectedDate }} </p>
+              <p style="color:black;">The date selected to record your tasks is:  {{ selectedDate }} </p>
               <p></p>
             </div>
             <br>
-            <!--Input para escribir la tarea-->
-            <input v-model="newTask.text" @keyup.enter="addTask" placeholder="Agrega una tarea" style="width: 400px;">
+            <!--Input for writing the task-->
+            <input v-model="newTask.text" @keyup.enter="addTask" placeholder="Add a task" style="width: 400px;">
             <br>
             <br>
             <v-row  style="text-align: center!important; justify-content: center!important;">
               
               <v-col cols="11">
                 <!--Registrar hora de comienzo de la tarea -->
+                <!--Record task start time -->
                 <v-menu ref="menu" v-model="timePicker" :close-on-content-click="false" :nudge-right="40" :return-value.sync="selectedTime" transition="scale-transition" offset-y>
                   <template v-slot:activator="{ on, attrs }">
-                    <v-text-field v-model="selectedTime" label="Seleccionar Hora" prepend-icon="mdi-clock-time-four-outline" readonly v-bind="attrs" v-on="on"></v-text-field>
+                    <v-text-field v-model="selectedTime" label="Select Start Time" prepend-icon="mdi-clock-time-four-outline" readonly v-bind="attrs" v-on="on"></v-text-field>
                   </template>
                   <v-time-picker v-if="timePicker" v-model="selectedTime" full-width @click:minute="$refs.menu.save(selectedTime)" @click:second="$refs.menu.save(selectedTime)"></v-time-picker>
                 </v-menu>
                 <br>
                 <!--Registrar hora de cierre de la tarea -->
+                <!--Record task closing time -->
                 <v-menu ref="menuEnd" v-model="timePickerEnd" :close-on-content-click="false" :nudge-right="40" :return-value.sync="selectedTimeEnd" transition="scale-transition" offset-y>
                   <template v-slot:activator="{ on, attrs }">
-                    <v-text-field v-model="selectedTimeEnd" label="Seleccionar Hora de Finalización" prepend-icon="mdi-clock-time-four-outline" readonly v-bind="attrs" v-on="on"></v-text-field>
+                    <v-text-field v-model="selectedTimeEnd" label="Select end time" prepend-icon="mdi-clock-time-four-outline" readonly v-bind="attrs" v-on="on"></v-text-field>
                   </template>
                   <v-time-picker v-if="timePickerEnd" v-model="selectedTimeEnd" full-width @click:minute="$refs.menuEnd.save(selectedTimeEnd)" @click:second="$refs.menuEnd.save(selectedTimeEnd)"></v-time-picker>
                 </v-menu>
