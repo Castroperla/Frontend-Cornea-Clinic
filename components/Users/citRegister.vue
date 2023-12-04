@@ -12,23 +12,23 @@
                         <input type="text" class="cajas" v-model="name" placeholder="Name" :rules="[reglas.requerido]">
                     </v-col>
                     <v-col>
-                        <p>Email </p>
+                        <p>Email: </p>
                         <input type="email" class="cajas" v-model="email" :rules="[reglas.requerido]">
                     </v-col>
                 </v-row>
                 <v-row align="center">
                     <v-col>
-                        <p>Phone: </p>
+                        <p>Mobile: </p>
                         <input type="phone" class="cajas" v-model="phone" :rules="[reglas.requerido]"> 
                     </v-col>
                     <v-col>
-                        <p>Age </p>
+                        <p>Age: </p>
                         <input type="number" class="cajas" v-model="age" :rules="[reglas.requerido]">
                     </v-col>
                 </v-row>
                 <v-row align="center" >
                     <v-col cols="4">
-                        <p>Gender</p>
+                        <p>Gender:</p>
                         <v-radio-group  v-model="gender" row :rules="[reglas.requerido]">
                             <v-radio
                                 label="Male"
@@ -48,17 +48,18 @@
                 <v-row align="center" >
                     <v-col>
                         <p> Date </p>
-                        <input type="date" class="cajasA" v-model="date">
+                        <input type="date" class="cajasB" v-model="date">
                     </v-col>
                 </v-row>
                 <v-row align="center" >
                     <v-col>
-                        <p>Time </p>
+                        <p>Time: </p>
                         <input type="time" class="cajasP" v-model="time">
                     </v-col>
                 </v-row>
                 <v-row>
                 <v-col>
+                    <p>Type of Appointment: </p>
                     <v-radio-group v-model="appointmentType">
                     <v-radio label="Checkup" value="Checkup"></v-radio>
                     <v-radio label="Surgery" value="Surgery"></v-radio>
@@ -66,7 +67,7 @@
                 </v-col>
                 </v-row>
                 <v-row>
-                    <v-btn id="btnPatients"  @click="registraCita"> 
+                    <v-btn id="btnAppointment"  @click="registraCita"> 
                         <p >Add appointment</p>
                     </v-btn>
                 </v-row>

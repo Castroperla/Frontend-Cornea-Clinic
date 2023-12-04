@@ -1,11 +1,23 @@
 <template>
+    <v-container fluid>
     <v-row>
-        <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on }">
-                <v-btn rounded color="#4FB783" class="mb-2" style="color: white;" v-on="on">Add new cita</v-btn>
+        <!--Boton para modal nueva cita-->
+        <v-dialog v-model="newAppointment" max-width="500px">
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn 
+                    rounded color="#4FB783" 
+                    class="mb-2" 
+                    style="color: white;" 
+                    @click="nuevaCita()"
+                    v-on="on"
+                    v-bind="attrs">
+                    Add new cita
+                </v-btn>
             </template>
         </v-dialog>
+
         <v-spacer></v-spacer>
+
         <v-text-field
             v-model="search"
             append-icon="mdi mdi-account-search-outline"
@@ -16,7 +28,7 @@
     
         <v-data-table 
             :headers="headers"
-            :items="searchResults"
+            :items="citas"
             elevation="2"
             class="tabla1"
         >
@@ -56,79 +68,170 @@
             </v-tooltip>
         </template> 
         </v-data-table>
-<!--Modal para editar citas-->
-        <v-dialog v-model="dialogEdit" max-width="800">
+
+<!--Modal para agregar cita-->
+        <v-dialog v-model="newAppointment" max-width="900">
         <v-card>
-        <v-card-title class="text-h4" style="color:#4FB783;">
-            Edit Appointment
+        <v-card-title>
+            <v-row>
+                <v-col cols="10">
+                    Agregar cita nueva
+                </v-col>
+                <v-col cols="2">
+                    <v-icon @click="cerrarModal" style="margin-left: 70px; color: rgb(123, 123, 123); background-color: transparent!important;">mdi-close</v-icon>
+                </v-col>
+            </v-row>
         </v-card-title>
 
         <v-card-text>
+            <v-form ref="citRegistro" v-model="citRegistro">
+                <v-row align="center">
+
+                <v-col>
+                    <p>Name: </p>
+                    <input type="text" class="cajas" v-model="name" placeholder="Name" :rules="[reglas.requerido]">
+                </v-col>
+
+                <v-col>
+                    <p>Email:</p>
+                    <input type="email" class="cajas" v-model="email" :rules="[reglas.requerido]"> 
+                </v-col>
+                </v-row>
+
+
+                <v-row>
+                <v-col>
+                    <p>Mobile:</p>
+                    <input type="text" class="cajas" v-model="phone" :rules="[reglas.requerido]">
+                </v-col>
+                <v-col>
+                    <p>Age:</p>
+                    <input type="number" class="cajasC" v-model="age" :rules="[reglas.requerido]">  
+                </v-col>
+                </v-row>
+
+                <v-row>
+                <v-col>
+                    <p>Gender:</p>
+                    <v-radio-group  v-model="gender" row :rules="[reglas.requerido]">
+                  <v-radio
+                    label="Male"
+                    value="Male"
+                  ></v-radio>
+                  <v-radio
+                    label="Female"
+                    value="Female"
+                  ></v-radio>
+                  <v-radio
+                    label="Other"
+                    value="Other"
+                  ></v-radio>
+                </v-radio-group>
+                </v-col>
+                <v-col>
+                    <p>Date:</p>
+                    <input type="date" class="cajasB" v-model="birthday">
+                </v-col>
+                </v-row>
+
+                <v-row>
+                <v-col>
+                    <p>Time:</p>
+                    <input type="time" v-model="time">
+                </v-col>
+                <v-col>
+                <p>Appointment Type</p>
+                <v-radio-group  v-model="appointmentType" row :rules="[reglas.requerido]">
+                  <v-radio
+                    label="Checkup"
+                    value="Checkup"
+                  ></v-radio>
+                  <v-radio
+                    label="Surgery"
+                    value="Surgery"
+                  ></v-radio>
+                </v-radio-group>
+                </v-col>
+                </v-row>
+
+                <v-row>
+              <v-btn id="btnAppointment"  @click="registraCita"> 
+                <p >Add appointment</p>
+              </v-btn>
+            </v-row>
+            </v-form>
+        </v-card-text>
+    </v-card>
+</v-dialog>
+
+<!--Modal para editar citas-->
+        <v-dialog
+        v-model="dialogEdit"
+        max-width="800" 
+        >
+        <v-card>
+          <v-card-title class="text-h4" style="color:#4FB783;">
+          Edit Appointment
+          </v-card-title>
+
+<!--Editar cita-->
+        <v-card-text>
             <v-form ref="frmRegistro" v-model="frmRegistro">
-            <v-container>
-                <v-row>
-                <v-col cols="12">
-                    <v-text-field label="Name" v-model="editAppointmentData.name"></v-text-field>
-                </v-col>
-                </v-row>
-                <v-row>
-                <v-col cols="12">
-                    <v-text-field label="Email" type="email" v-model="editAppointmentData.lastname"></v-text-field>
-                </v-col>
-                </v-row>
-                <v-row>
-                <v-col cols="12">
-                    <v-text-field label="Phone" v-model="editAppointmentData.phone"></v-text-field>
-                </v-col>
-                </v-row>
-                <v-row>
-                <v-col cols="6">
-                    <v-text-field label="Age" type="number" v-model="editAppointmentData.age"></v-text-field>
-                </v-col>
-                <v-col cols="6">
-                    <v-select label="Gender" v-model="editAppointmentData.gender" :items="['Male', 'Female', 'Other']"></v-select>
-                </v-col>
-                </v-row>
-                <v-row>
-                <v-col cols="12">
-                    <v-text-field label="Date" type="date" v-model="editAppointmentData.date"></v-text-field>
-                </v-col>
-                </v-row>
-                <v-row>
-                <v-col cols="12">
-                    <v-text-field label="Time" type="time" v-model="editAppointmentData.time"></v-text-field>
-                </v-col>
-                </v-row>
-                <v-row>
-                <v-col cols="12">
-                    <v-radio-group v-model="editAppointmentData.appointmentType">
-                    <v-radio label="Checkup" value="Checkup"></v-radio>
-                    <v-radio label="Surgery" value="Surgery"></v-radio>
-                    </v-radio-group>
-                </v-col>
-                </v-row>
-            </v-container>
+                <v-container>
+                    <v-row>
+                        <v-col cols="12" md="6">
+                            <v-text-field label="Name" v-model="editAppointmentData.name"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <v-text-field label="Email" v-model="editAppointmentData.email"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <v-text-field label="Mobile" v-model="editAppointmentData.phone"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <v-text-field label="Age" v-model="editAppointmentData.age"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <v-select label="Gender" v-model="editPatientsData.gender" :items="['male', 'female', 'other']"></v-select>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <v-text-field label="Age" type="date" v-model="editAppointmentData.date"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <v-text-field label="Time" type="time" v-model="editAppointmentData.time"></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                            <v-select label="Type of Appointment" v-model="editPatientsData.typeofappointment" :items="['checkup', 'surgery']"></v-select>
+                        </v-col>
+                    </v-row>
+                </v-container>
             </v-form>
         </v-card-text>
 
         <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn style="color: white;"
-            color="red"
-            rounded
-            @click="dialogEdit = false">
-            Cancelar
-            </v-btn>
-            <v-btn 
-            style="color: white;"
-            color="#4FB783"
-            rounded
-            @click="event=>editar()">
-            Editar
-            </v-btn>
+
+            <v-btn
+              style="color: white;"
+              color="red"
+              rounded
+              @click="dialogEdit = false"
+              >
+              Cancelar
+              </v-btn>
+
+              <v-btn
+              style="color: white;"
+              color="#4FB783"
+              rounded
+              @click="editar()"
+              >
+              Editar
+              </v-btn>
         </v-card-actions>
-        </v-card>
-    </v-dialog>
+    </v-card>
+</v-dialog>
+
 <!--Modal elimina pacientes-->
     <v-dialog
         v-model="dialog"
@@ -149,7 +252,7 @@
             <v-btn
             color="red darken-1"
             text
-            @click="$event => dialog = false"
+            @click="dialog = false"
             >
             Cancelar
             </v-btn>
@@ -157,7 +260,7 @@
             <v-btn
             color="green darken-1"
             text
-            @click="$event =>borrar()"
+            @click="borrar()"
             >
             Borrar
             </v-btn>
@@ -166,11 +269,10 @@
     </v-dialog>
 
     </v-row>
+    </v-container>
 </template>
 
 <style>
-
-
 #registerpat {
     display: inline-flex;
     padding: 7.505px 16.678px;
@@ -273,6 +375,16 @@ export default {
     layout: 'dashboard',
   data() {
       return{
+        newAppointment: false, 
+        name: '', 
+        email: '', 
+        phone:'', 
+        age: '', 
+        gender: '', 
+        date: '', 
+        time: '', 
+        appointmentType: '',
+        search: '',
           headers: [
               { text: 'Name', align: 'center', sortable: true, value: 'name'}, 
               { text: 'Mobile', align: 'center', sortable: false, value: 'phone'},
@@ -291,7 +403,8 @@ export default {
           reglas: {
               requerido: value => !!value || 'Campo Requerido'
           }, 
-          frmRegistro: false
+          frmRegistro: false,
+          citRegistro: false
       }
   }, 
   watch: {
@@ -312,6 +425,12 @@ export default {
       this.loadUsers()
   },
   methods: {
+        nuevaCita() {
+            this.newAppointment = true
+        },
+        cerrarModal() {
+            this.newAppointment = false
+        },
       async loadUsers () {
           const citas = await fetch('http://localhost:5000/get-appointments')
           const data = await citas.json()
