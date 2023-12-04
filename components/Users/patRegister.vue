@@ -1,82 +1,82 @@
 <template >
     <div class="contenedor" style="margin:20px" >
-                <v-row >
-                    <v-col cols="12" style="text-align: center;">
-                        <p class="formTit">Add new patient</p>
-                    </v-col>
-                </v-row>
-            <v-form ref="frmRegistro" v-model="frmRegistro">
-                <v-row align="center" >
-                    <v-col>
-                        <p>First name: </p>
-                        <input type="text" class="cajas" v-model="name" placeholder="Name" :rules="[reglas.requerido]">
-                    </v-col>
-                    <v-col>
-                        <p>Lastname </p>
-                        <input type="text" class="cajas" v-model="lastname" :rules="[reglas.requerido]">
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col>
-                        <p>Email: </p>
-                        <input type="email" class="cajas" v-model="email" :rules="[reglas.requerido]"> 
-                    </v-col>
-                    <v-col>
-                        <p>Mobile </p>
-                        <input type="text" class="cajas" v-model="phone" :rules="[reglas.requerido]">
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
-                    <v-col cols="4">
-                        <p>Date of birth </p>
-                        <input type="date" class="cajasB" v-model="birthday">
-                    </v-col>
-                    <v-col cols="4">
-                        <p>Age </p>
-                        <input type="number" class="cajasC" v-model="age" :rules="[reglas.requerido]">  
-                    </v-col>
-                    <v-col cols="4">
-                        <p>Gender</p>
-                        <v-radio-group  v-model="gender" row :rules="[reglas.requerido]">
-                            <v-radio
-                                label="Male"
-                                value="Male"
-                            ></v-radio>
-                            <v-radio
-                                label="Female"
-                                value="Female"
-                            ></v-radio>
-                            <v-radio
-                                label="Other"
-                                value="Other"
-                            ></v-radio>
-                        </v-radio-group>
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
-                    <v-col>
-                        <p> Address </p>
-                        <input type="text" class="cajasA" v-model="address">
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
-                    <v-col>
-                        <p>Treatment </p>
-                        <input type="text" class="cajasP" v-model="treatment">
-                    </v-col>
-                </v-row>
-                <v-row align="center">
-                    <v-col>
-                        <p>Blood Type: </p>
-                        <input type="text" class="cajas" v-model="blood">
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-btn id="btnPatients"  @click="registraPacientes"> 
-                        <p >Add patients</p>
-                    </v-btn>
-                </v-row>
-            </v-form>
+        <v-row >
+            <v-col cols="12" style="text-align: center;">
+                <p class="formTit">Add new patient</p>
+            </v-col>
+        </v-row>
+        <v-form ref="frmRegistro" v-model="frmRegistro">
+            <v-row align="center" >
+                <v-col>
+                    <p>First name: </p>
+                    <input type="text" class="cajas" v-model="name" placeholder="Name" :rules="[reglas.requerido]">
+                </v-col>
+                <v-col>
+                    <p>Lastname </p>
+                    <input type="text" class="cajas" v-model="lastname" :rules="[reglas.requerido]">
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col>
+                    <p>Email: </p>
+                    <input type="email" class="cajas" v-model="email" :rules="[reglas.requerido]"> 
+                </v-col>
+                <v-col>
+                    <p>Mobile </p>
+                    <input type="text" class="cajas" v-model="phone" :rules="[reglas.requerido]">
+                </v-col>
+            </v-row>
+            <v-row align="center" >
+                <v-col cols="4">
+                    <p>Date of birth </p>
+                    <input type="date" class="cajasB" v-model="birthday">
+                </v-col>
+                <v-col cols="4">
+                    <p>Age </p>
+                   <input type="number" class="cajasC" v-model="age" :rules="[reglas.requerido]">  
+                </v-col>
+                <v-col cols="4">
+                    <p>Gender</p>
+                    <v-radio-group  v-model="gender" row :rules="[reglas.requerido]">
+                        <v-radio
+                            label="Male"
+                            value="Male"
+                        ></v-radio>
+                        <v-radio
+                            label="Female"
+                            value="Female"
+                        ></v-radio>
+                        <v-radio
+                            label="Other"
+                            value="Other"
+                        ></v-radio>
+                    </v-radio-group>
+                </v-col>
+            </v-row>
+            <v-row align="center" >
+                <v-col>
+                    <p> Address </p>
+                    <input type="text" class="cajasA" v-model="address">
+                </v-col>
+            </v-row>
+            <v-row align="center" >
+                <v-col>
+                    <p>Treatment </p>
+                    <input type="text" class="cajasP" v-model="treatment">
+                </v-col>
+            </v-row>
+            <v-row align="center">
+                <v-col>
+                    <p>Blood Type: </p>
+                    <input type="text" class="cajas" v-model="blood">
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-btn id="btnPatients"  @click="registraPacientes"> 
+                    <p >Add patients</p>
+                </v-btn>
+            </v-row>
+        </v-form>
     </div>
 </template>
 
