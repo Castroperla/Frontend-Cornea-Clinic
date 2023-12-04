@@ -144,18 +144,18 @@
               this.selectedTime !== null && 
               this.selectedTimeEnd !== null
             ) {
-                const currentDate = new Date(this.selectedDate).toISOString().split('T')[0];
-                const dateTimeStart = `${currentDate} ${this.selectedTime}`;
-                const dateTimeEnd = `${currentDate} ${this.selectedTimeEnd}`;
+                const currentDate = new Date(this.selectedDate).toISOString().split('T')[0]
+                const dateTimeStart = `${currentDate} ${this.selectedTime}`
+                const dateTimeEnd = `${currentDate} ${this.selectedTimeEnd}`
     
-                this.tasksSent.push({ text: this.newTask.text.trim(), dateStart: dateTimeStart, dateEnd: dateTimeEnd });
-                this.newTask.text = '';
+                this.tasksSent.push({ text: this.newTask.text.trim(), dateStart: dateTimeStart, dateEnd: dateTimeEnd })
+                this.newTask.text = ''
 
 
                 this.tasksSent.sort((a, b) => {
-                  return new Date(a.dateStart) - new Date(b.dateStart);
-                });
-                this.tasks = this.tasksSent;
+                  return new Date(a.dateStart) - new Date(b.dateStart)
+                })
+                this.tasks = this.tasksSent
               }
           },
         removeTask(index) {
@@ -179,17 +179,16 @@
           const currentDateTime = new Date().getTime()
           this.tasksSent.forEach((task, index) => {
             if (task.dateStart && task.dateEnd) {
-              const taskStartDateTime = new Date(task.dateStart).getTime();
-              const taskEndDateTime = new Date(task.dateEnd).getTime();
+              const taskStartDateTime = new Date(task.dateStart).getTime()
+              const taskEndDateTime = new Date(task.dateEnd).getTime()
               
               if (taskStartDateTime <= currentDateTime && taskEndDateTime >= currentDateTime) {
-                this.$set(this.tasksSent, index, { ...task, active: true });
+                this.$set(this.tasksSent, index, { ...task, active: true })
               } else {
-                this.$set(this.tasksSent, index, { ...task, active: false });
+                this.$set(this.tasksSent, index, { ...task, active: false })
               }
             }
-          });
-          
+          })
         },
       }
   };
