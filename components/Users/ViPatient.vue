@@ -29,6 +29,7 @@
          <v-data-table 
              :headers="headers"
              :items="patients"
+             :search="search"
              elevation="2"
              class="tabla1"
          >
@@ -459,7 +460,8 @@
         requerido: value => !!value || 'Campo Requerido'
       }, 
       frmRegistro: false,
-      pacRegistro: false
+      pacRegistro: false,  
+      search: '', 
     }
    }, 
   watch: {
