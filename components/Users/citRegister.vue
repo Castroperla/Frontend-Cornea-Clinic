@@ -8,33 +8,25 @@
             <v-form ref="frmRegistro" v-model="frmRegistro">
                 <v-row align="center" >
                     <v-col>
-                        <p>First name: </p>
+                        <p> Name: </p>
                         <input type="text" class="cajas" v-model="name" placeholder="Name" :rules="[reglas.requerido]">
                     </v-col>
                     <v-col>
-                        <p>Lastname </p>
-                        <input type="text" class="cajas" v-model="lastname" :rules="[reglas.requerido]">
+                        <p>Email </p>
+                        <input type="email" class="cajas" v-model="email" :rules="[reglas.requerido]">
                     </v-col>
                 </v-row>
-                <v-row>
+                <v-row align="center">
                     <v-col>
-                        <p>Email: </p>
-                        <input type="email" class="cajas" v-model="email" :rules="[reglas.requerido]"> 
+                        <p>Phone: </p>
+                        <input type="phone" class="cajas" v-model="phone" :rules="[reglas.requerido]"> 
                     </v-col>
                     <v-col>
-                        <p>Mobile </p>
-                        <input type="text" class="cajas" v-model="phone" :rules="[reglas.requerido]">
+                        <p>Age </p>
+                        <input type="number" class="cajas" v-model="age" :rules="[reglas.requerido]">
                     </v-col>
                 </v-row>
                 <v-row align="center" >
-                    <v-col cols="4">
-                        <p>Date of birth </p>
-                        <input type="date" class="cajasB" v-model="birthday">
-                    </v-col>
-                    <v-col cols="4">
-                        <p>Age </p>
-                        <input type="number" class="cajasC" v-model="age" :rules="[reglas.requerido]">  
-                    </v-col>
                     <v-col cols="4">
                         <p>Gender</p>
                         <v-radio-group  v-model="gender" row :rules="[reglas.requerido]">
@@ -55,25 +47,27 @@
                 </v-row>
                 <v-row align="center" >
                     <v-col>
-                        <p> Address </p>
-                        <input type="text" class="cajasA" v-model="address">
+                        <p> Date </p>
+                        <input type="date" class="cajasA" v-model="date">
                     </v-col>
                 </v-row>
                 <v-row align="center" >
                     <v-col>
-                        <p>Treatment </p>
-                        <input type="text" class="cajasP" v-model="treatment">
-                    </v-col>
-                </v-row>
-                <v-row align="center">
-                    <v-col>
-                        <p>Blood Type: </p>
-                        <input type="text" class="cajas" v-model="blood">
+                        <p>Time </p>
+                        <input type="time" class="cajasP" v-model="time">
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-btn id="btnPatients"  @click="registraPacientes"> 
-                        <p >Add patients</p>
+                <v-col>
+                    <v-radio-group v-model="appointmentType">
+                    <v-radio label="Checkup" value="Checkup"></v-radio>
+                    <v-radio label="Surgery" value="Surgery"></v-radio>
+                    </v-radio-group>
+                </v-col>
+                </v-row>
+                <v-row>
+                    <v-btn id="btnPatients"  @click="registraCita"> 
+                        <p >Add appointment</p>
                     </v-btn>
                 </v-row>
             </v-form>
@@ -186,15 +180,13 @@ export default {
         return{
             frmRegistro: false, 
             name: '',
-            lastname: '', 
             email: '', 
             phone:'', 
-            birthday: '', 
             age: '', 
             gender: '', 
-            address: '',
-            treatment: '', 
-            blood: '', 
+            date: '', 
+            time: '', 
+            appointmentType: '',
             reglas: {
                 requerido: value => !!value || 'Campo Requerido'
             }
@@ -202,25 +194,23 @@ export default {
         }
     }, 
     methods: {
-        async registraPacientes () {
+        async registraCita () {
             this.frmRegistro = this.$refs.frmRegistro.validate()
 
             if (this.frmRegistro) {
-                //Registramos usuario
+                //Registramos cita
                 const sendData = {
                     name: this.name,
-                    lastname: this.lastname, 
                     email: this.email, 
                     phone: this.phone, 
-                    birthday: this.birthday, 
                     age: this.age, 
                     gender: this.gender, 
-                    address: this.address,
-                    treatment: this.treatment, 
-                    blood: this.blood
+                    date: this.date,
+                    time: this.time, 
+                    appointmentType: this.appointmentType
                 }
 
-                const rawResponse = await fetch('http://localhost:5000/new-patient',{
+                const rawResponse = await fetch('http://localhost:5000/new-appointment',{
                     method: 'POST', 
                     headers: {
                         'Accept': 'application/json', 
@@ -230,18 +220,16 @@ export default {
                 })
                 const content = await rawResponse.json()
                 if (content.alert === 'success'){
-                    this.name = '',
-                    this.lastname= '', 
+                    this.name = '', 
                     this.email='', 
-                    this.phone='', 
-                    this.birthday='', 
+                    this.phone='',
                     this.age='', 
                     this.gender='', 
-                    this.address='',
-                    this.treatment='', 
-                    this.blood='',
-                    this.$store.commit('setNewPatient', true)
-                } else if (content.alert === 'The patient already exists') {
+                    this.date='',
+                    this.time='', 
+                    this.appointmentType='',
+                    this.$store.commit('setNewAppointment', true)
+                } else if (content.alert === 'The appointment already exists') {
                     //Crear alerta cuando existe. 
                 }
                 console.log('@@ response => ', content)

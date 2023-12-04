@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import appointments from '~/components/Users/appointments.vue';
+import appointments from '~/components/Users/Viappointments.vue';
 export default {
     layout: 'dashboard',
     components: {

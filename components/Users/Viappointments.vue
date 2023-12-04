@@ -44,7 +44,7 @@
                         color="#3e68ff"
                         icon 
                         v-bind="attrs"
-                        @click="$event => editAppointment(item)"
+                        @click=" editAppointment(item)"
                         v-on="on"
                     >
                     <v-icon>mdi mdi-pencil-outline</v-icon>
@@ -57,7 +57,7 @@
         </template> 
         </v-data-table>
 <!--Modal para editar citas-->
-        <v-dialog v-model="dialogEdit" max-width="600">
+        <v-dialog v-model="dialogEdit" max-width="800">
         <v-card>
         <v-card-title class="text-h4" style="color:#4FB783;">
             Edit Appointment
@@ -347,15 +347,13 @@ export default {
           console.log('@@@ patient=>', cita)
 
           this.editAppointmentData.name = cita.name
-          this.editAppointmentData.lastname = cita.lastname
           this.editAppointmentData.email = cita.email
           this.editAppointmentData.phone= cita.phone
-          this.editAppointmentData.birthday= cita.birthday
           this.editAppointmentData.age = cita.age
           this.editAppointmentData.gender = cita.gender
-          this.editAppointmentData.address = cita.address
-          this.editAppointmentData.treatment = cita.treatment
-          this.editAppointmentData.blood = cita.blood
+          this.editAppointmentData.date = cita.date
+          this.editAppointmentData.time = cita.time
+          this.editAppointmentData.appointmentType = cita.appointmentType
           this.dialogEdit = true
       }, 
       async editar () {

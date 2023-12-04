@@ -246,7 +246,7 @@ export default {
                 }
                 console.log('@@ response => ', content)
             } else {
-                //No tificaciones de Error 
+                //Notificaciones de Error 
             }
         }
     }
