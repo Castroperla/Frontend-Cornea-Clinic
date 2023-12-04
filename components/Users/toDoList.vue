@@ -2,7 +2,6 @@
   <v-container>
     <v-layout>
       <v-flex>
-
         <v-row>
           <!--CALENDAR AND TO-DO LIST-->
           <v-col cols="7">
@@ -44,12 +43,10 @@
                     </v-btn>
                   </li>
                 </ul>
-
               </v-row>
             </div>
           </v-col>
         </v-row>
-
       </v-flex>
     </v-layout>
 
@@ -59,7 +56,6 @@
           <v-card-title style="text-align: center; justify-content: center;">Welcome to the task log
             <v-icon  @click="modal = false" style="margin-left: 70px; color: rgb(123, 123, 123); background-color: transparent!important;">mdi-close</v-icon>
           </v-card-title>
-
           <v-card-text style="text-align: center; justify-content: center;">
             <!--MOSTRAR FECHA SELECCIONADA-->
             <div v-if="selectedDate">
@@ -91,11 +87,9 @@
                   </template>
                   <v-time-picker v-if="timePickerEnd" v-model="selectedTimeEnd" full-width @click:minute="$refs.menuEnd.save(selectedTimeEnd)" @click:second="$refs.menuEnd.save(selectedTimeEnd)"></v-time-picker>
                 </v-menu>
-
                 <v-btn @click="addTask" style="width: 400px; background-color: #4FB783; color: white;">Agregar Tarea</v-btn>
               </v-col>
             </v-row>
-
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -127,6 +121,11 @@
         }
       },
       mounted(){
+        const  savedTasks = localStorage.getItem('tasksSent')
+        if(savedTasks) {
+          this.tasksSent = JSON.parse(savedTasks)
+          this.tasks = this.tasksSent
+        }
         document.addEventListener('visibilitychange', this.handleVisibilityChange)
         this.handleVisibilityChange()
       },
@@ -153,15 +152,16 @@
                 this.tasksSent.push({ text: this.newTask.text.trim(), dateStart: dateTimeStart, dateEnd: dateTimeEnd })
                 this.newTask.text = ''
 
-
                 this.tasksSent.sort((a, b) => {
                   return new Date(a.dateStart) - new Date(b.dateStart)
                 })
                 this.tasks = this.tasksSent
               }
+              localStorage.setItem('tasksSent', JSON.stringify(this.tasksSent))
           },
         removeTask(index) {
-            this.tasksSent.splice(index, 1)
+          this.tasksSent.splice(index, 1)
+          localStorage.setItem('tasksSent', JSON.stringify(this.tasksSent));
         },
         toggleTask(index) {
             this.tasks[index].completed = !this.tasks[index].completed
@@ -209,7 +209,6 @@
 .custom-icon {
   color: #4FB783 !important;
 }
-
 .v-calendar .v-date-picker-table--active .v-date-picker-table__date--active {
   background-color: #EDF8F3 !important;
 }
@@ -222,3 +221,4 @@
   color: white;
 }
 </style>
+
