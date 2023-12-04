@@ -9,8 +9,13 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@mdi/font": "^7.3.67",
     "@nuxtjs/auth": "^4.9.1",
+=======
+    "@nuxtjs/auth": "^4.9.1",
+    "@nuxtjs/auth-next": "^5.0.0-1667386184.dfbbb54",
+>>>>>>> main
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.25.3",
     "nuxt": "^2.15.8",
