@@ -582,7 +582,8 @@
                          this.gender='', 
                          this.address='',
                          this.treatment='', 
-                         this.blood='',this.newPatient = false
+                         this.blood='',
+                         this.newPatient = false,
                          this.loadUsers(),
                          this.$store.commit('setNewPatient', true)
                      } else if (content.alert === 'The patient already exists') {
