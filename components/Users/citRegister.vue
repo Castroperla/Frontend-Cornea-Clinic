@@ -8,44 +8,9 @@
             <v-form ref="frmRegistro" v-model="frmRegistro">
                 <v-row align="center" >
                     <v-col>
-                        <p> Name: </p>
-                        <input type="text" class="cajas" v-model="name" placeholder="Name" :rules="[reglas.requerido]">
-                    </v-col>
-                    <v-col>
                         <p>Email: </p>
                         <input type="email" class="cajas" v-model="email" :rules="[reglas.requerido]">
                     </v-col>
-                </v-row>
-                <v-row align="center">
-                    <v-col>
-                        <p>Mobile: </p>
-                        <input type="phone" class="cajas" v-model="phone" :rules="[reglas.requerido]"> 
-                    </v-col>
-                    <v-col>
-                        <p>Age: </p>
-                        <input type="number" class="cajas" v-model="age" :rules="[reglas.requerido]">
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
-                    <v-col cols="4">
-                        <p>Gender:</p>
-                        <v-radio-group  v-model="gender" row :rules="[reglas.requerido]">
-                            <v-radio
-                                label="Male"
-                                value="Male"
-                            ></v-radio>
-                            <v-radio
-                                label="Female"
-                                value="Female"
-                            ></v-radio>
-                            <v-radio
-                                label="Other"
-                                value="Other"
-                            ></v-radio>
-                        </v-radio-group>
-                    </v-col>
-                </v-row>
-                <v-row align="center" >
                     <v-col>
                         <p> Date </p>
                         <input type="date" class="cajasB" v-model="date">
@@ -56,15 +21,13 @@
                         <p>Time: </p>
                         <input type="time" class="cajasP" v-model="time">
                     </v-col>
-                </v-row>
-                <v-row>
-                <v-col>
+                     <v-col>
                     <p>Type of Appointment: </p>
-                    <v-radio-group v-model="appointmentType">
+                    <v-radio-group v-model="typeofreservation">
                     <v-radio label="Checkup" value="Checkup"></v-radio>
                     <v-radio label="Surgery" value="Surgery"></v-radio>
                     </v-radio-group>
-                </v-col>
+                     </v-col>
                 </v-row>
                 <v-row>
                     <v-btn id="btnAppointment"  @click="registraCita"> 
@@ -141,7 +104,7 @@
     border: 1px solid var(--gray-light-gray, #DDD);
     background: var(--gray-whte, #FFF);
 }
-#btnPatients {
+#btnAppointments {
     align-content: center;
     border-radius: 15px;
     background: var(--primary-green, #4fb783);
@@ -187,7 +150,7 @@ export default {
             gender: '', 
             date: '', 
             time: '', 
-            appointmentType: '',
+            typeofreservation: '',
             reglas: {
                 requerido: value => !!value || 'Campo Requerido'
             }
@@ -208,7 +171,7 @@ export default {
                     gender: this.gender, 
                     date: this.date,
                     time: this.time, 
-                    appointmentType: this.appointmentType
+                    typeofreservation: this.typeofreservation
                 }
 
                 const rawResponse = await fetch('http://localhost:5000/new-appointment',{
@@ -228,7 +191,7 @@ export default {
                     this.gender='', 
                     this.date='',
                     this.time='', 
-                    this.appointmentType='',
+                    this.typeofreservation='',
                     this.$store.commit('setNewAppointment', true)
                 } else if (content.alert === 'The appointment already exists') {
                     //Crear alerta cuando existe. 
