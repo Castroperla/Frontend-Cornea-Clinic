@@ -3,7 +3,7 @@ export default {
   data() {
     return {
       items: [
-        { text: 'Dashboard', icon: 'mdi-view-dashboard', route: '/home' },
+        { text: 'Home', icon: 'mdi-view-dashboard', route: '/home' },
         { text: 'Appointments', icon: 'mdi mdi-notebook-plus', route: '/citas' },
         { text: 'Patients', icon: 'mdi-account-group-outline', route: '/pacientes' },
         { text: 'Schedule', icon: 'mdi mdi-book-clock', route: '/toDoList' }
@@ -23,7 +23,7 @@ export default {
     app
     permanent
     left
-    width="300" 
+    width="300"
   >
     <v-list>
       <v-list-item >
