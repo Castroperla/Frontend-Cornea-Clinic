@@ -1,241 +1,262 @@
 <template>
-    <v-row>
-        <!--Boton para abrir el modal para una nueva cita-->
-        <v-dialog v-model="nuevaCita" max-width="500px">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn 
-                rounded color="#4FB783" 
-                class="mb-2" 
-                style="color: white;"
-                @click="newcita()"  
-                v-on="on" 
-                v-bind="attrs"
-              > Add new appointment
-              </v-btn>
-            </template>
-        </v-dialog>
+  <v-container>
+    <v-card elevation="2" class="pa-6">
+      <v-row>
+          <!--Boton para abrir el modal para una nueva cita-->
+          <v-dialog v-model="nuevaCita" max-width="500px">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn 
+                  rounded color="#4FB783" 
+                  class="mb-2" 
+                  style="color: white;"
+                  @click="newcita()"  
+                  v-on="on" 
+                  v-bind="attrs"
+                > Add new appointment
+                </v-btn>
+              </template>
+          </v-dialog>
 
 
-        <v-spacer></v-spacer>
-        <v-text-field
-            v-model="search"
-            append-icon="mdi mdi-account-search-outline"
-            label="Search"
-            single-line
-            hide-details
-        ></v-text-field>
-    
-        <v-data-table 
-            :headers="headers"
-            :items="citas"
-            elevation="2"
-            class="tabla1"
-        >
-        <template #[`item.Acciones`]="{ item }">
-            <v-tooltip top>
-                <template v-slot:activator="{on, attrs}">
-                    <v-btn
-                        color="red"
-                        icon 
-                        @click="deleteAppointment(item.email)"
-                        v-bind="attrs"
-                        v-on="on"
-                    >
-                    <v-icon>mdi mdi-trash-can-outline</v-icon>
-                    </v-btn>
-                </template>
-                <span>
-                    Eliminar la cita{{ item.name }}
-                </span>
-            </v-tooltip>
+          <v-spacer></v-spacer>
+          <v-text-field
+              v-model="search"
+              append-icon="mdi mdi-account-search-outline"
+              label="Search"
+              single-line
+              hide-details
+          ></v-text-field>
+      
+          <v-data-table 
+              :headers="headers"
+              :items="citas"
+              elevation="2"
+              class="tabla1"
+          >
+          <template #[`item.Acciones`]="{ item }">
+              <v-tooltip top>
+                  <template v-slot:activator="{on, attrs}">
+                      <v-btn
+                          color="red"
+                          icon 
+                          @click="deleteAppointment(item.email)"
+                          v-bind="attrs"
+                          v-on="on"
+                      >
+                      <v-icon>mdi mdi-trash-can-outline</v-icon>
+                      </v-btn>
+                  </template>
+                  <span>
+                      Eliminar la cita{{ item.name }}
+                  </span>
+              </v-tooltip>
 
-            <v-tooltip top>
-                <template v-slot:activator="{on, attrs}">
-                    <v-btn
-                        color="#3e68ff"
-                        icon 
-                        v-bind="attrs"
-                        @click=" editAppointment(item)"
-                        v-on="on"
-                    >
-                    <v-icon>mdi mdi-pencil-outline</v-icon>
-                    </v-btn>
-                </template>
-                <span>
-                    Editar la cita{{ item.name }}
-                </span>
-            </v-tooltip>
-        </template> 
-        </v-data-table>
-        
-        <!--Modal para crear un nueva cita-->
-        <v-dialog v-model="nuevaCita" max-width="900">
-          <v-card>
-            <v-card-title>
-              <v-row>
-                <v-col cols="10">
-                  Add Appointment
-                </v-col>
-                <v-col cols="2">
-                  <v-icon @click="cerrarModal" style="margin-left: 70px; color: rgb(123, 123, 123); background-color: transparent!important;">mdi-close</v-icon>
-                </v-col>
-              </v-row>
-            </v-card-title>
-
-            <v-card-text>
-              <v-form ref="appRegistro" v-model="appRegistro">
-
-                <v-row align="center">
-
-                  <v-col>
-                    <p>Email: </p>
-                    <input type="text" class="cajas" v-model="email" placeholder="Email" :rules="[reglas.requerido]">
-                  </v-col>
-                  <v-col>
-                    <p>Date: </p>
-                    <input type="date" class="cajasB" v-model="date" placeholder="Date" :rules="[reglas.requerido]">
-                  </v-col>
-                  <v-col>
-                    <p>Time: </p>
-                    <input type="time" class="cajas" v-model="time" placeholder="Time" :rules="[reglas.requerido]">
-                  </v-col>
-                  <v-col>
-                    <p>Type of reservation: </p>
-                    <v-radio-group  v-model="typeofreservation" row :rules="[reglas.requerido]">
-                    <v-radio
-                      label="Checkup"
-                      value="Checkup"
-                    ></v-radio>
-                    <v-radio
-                      label="Surgery"
-                      value="Surgery"
-                    ></v-radio>
-                    </v-radio-group>
-                  </v-col>
-                </v-row>
-
-                <v-row>
-                  <v-btn id="btnAppointment"  @click="registraCita"> 
-                    <p >Add Apointment</p>
-                  </v-btn>
-                </v-row>
-              </v-form>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn color="red darken-1" @click="cerrarModal">Cerrar</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <!--Modal para editar citas-->
-        <v-dialog v-model="dialogEdit" max-width="800">
-          <v-card>
-          <v-card-title class="text-h4" style="color:#4FB783;">
-              Edit Appointment
-          </v-card-title>
-
-          <v-card-text>
-              <v-form ref="frmRegistro" v-model="frmRegistro">
-              <v-container>
-                  <v-row>
-                  <v-col cols="12" md="6">
-                      <v-text-field label="Name" v-model="editAppointmentData.name" readonly></v-text-field>
-                  </v-col>
-                  </v-row>
-                  <v-row>
-                  <v-col cols="12">
-                      <v-text-field label="Email" type="email" v-model="editAppointmentData.email" readonly></v-text-field>
-                  </v-col>
-                  </v-row>
-                  <v-row>
-                  <v-col cols="12">
-                      <v-text-field label="Phone" v-model="editAppointmentData.phone" readonly></v-text-field>
-                  </v-col>
-                  </v-row>
-                  <v-row>
-                  <v-col cols="6">
-                      <v-text-field label="Age" type="number" v-model="editAppointmentData.age" readonly></v-text-field>
-                  </v-col>
-                  <v-col cols="6">
-                      <v-text-field label="Gender" v-model="editAppointmentData.gender"  readonly></v-text-field>
-                  </v-col>
-                  </v-row>
-                  <v-row>
-                  <v-col cols="12">
-                      <v-text-field label="Date" type="date" v-model="editAppointmentData.date"></v-text-field>
-                  </v-col>
-                  </v-row>
-                  <v-row>
-                  <v-col cols="12">
-                      <v-text-field label="Time" type="time" v-model="editAppointmentData.time"></v-text-field>
-                  </v-col>
-                  </v-row>
-                  <v-row>
-                  <v-col cols="12">
-                    <v-text-field label="Type of reservation" v-model="editAppointmentData.typeofreservation"  readonly></v-text-field>
-                  </v-col>
-                  </v-row>
-              </v-container>
-              </v-form>
-          </v-card-text>
-
-          <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn style="color: white;"
-              color="red"
-              rounded
-              @click="dialogEdit = false">
-              Cancelar
-              </v-btn>
-
-              <v-btn 
-              style="color: white;"
-              color="#4FB783"
-              rounded
-              @click="event=>editar()">
-              Editar
-              </v-btn>
-          </v-card-actions>
-      </v-card>
-</v-dialog>
-
-
-        <!--Modal elimina pacientes-->
-        <v-dialog
-            v-model="dialog"
-            max-width="290"
-        >
+              <v-tooltip top>
+                  <template v-slot:activator="{on, attrs}">
+                      <v-btn
+                          color="#3e68ff"
+                          icon 
+                          v-bind="attrs"
+                          @click=" editAppointment(item)"
+                          v-on="on"
+                      >
+                      <v-icon>mdi mdi-pencil-outline</v-icon>
+                      </v-btn>
+                  </template>
+                  <span>
+                      Editar la cita{{ item.name }}
+                  </span>
+              </v-tooltip>
+          </template> 
+          </v-data-table>
+          
+          <!--Modal para crear un nueva cita-->
+          <v-dialog v-model="nuevaCita" max-width="900">
             <v-card>
-            <v-card-title class="text-h5">
-                Eliminar cita
+              <v-card-title>
+                <v-row align="center">
+                  <v-col cols="10">
+                    <span class="headline">Add Appointment</span>
+                  </v-col>
+                  <v-col cols="2" class="text-right">
+                    <v-icon @click="cerrarModal" class="icon-close">mdi-close</v-icon>
+                  </v-col>
+                </v-row>
+              </v-card-title>
+
+              <v-card-text>
+                <v-form ref="appRegistro" v-model="appRegistro">
+                  <v-row>
+                    <v-col cols="12" md="6">
+                      <v-text-field
+                        label="Email"
+                        v-model="email"
+                        outlined
+                        placeholder="Email"
+                        :rules="[reglas.requerido]"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-text-field
+                        type="date"
+                        label="Date"
+                        v-model="date"
+                        outlined
+                        placeholder="Date"
+                        :rules="[reglas.requerido]"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+
+                  <v-row>
+                    <v-col cols="12" md="6">
+                      <v-text-field
+                        type="time"
+                        label="Time"
+                        v-model="time"
+                        outlined
+                        placeholder="Time"
+                        :rules="[reglas.requerido]"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                      <v-select
+                        label="Type of reservation"
+                        v-model="typeofreservation"
+                        :items="['Checkup', 'Surgery']"
+                        outlined
+                        :rules="[reglas.requerido]"
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+
+                  <v-row justify="center" class="mt-4">
+                    <v-btn 
+                      @click="registraCita" 
+                      color="#4FB783" 
+                      dark
+                      rounded
+                      block
+                    >
+                      Add Appointment
+                    </v-btn>
+                  </v-row>
+                </v-form>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+          <!--Modal para editar citas-->
+          <v-dialog v-model="dialogEdit" max-width="800">
+            <v-card>
+            <v-card-title class="text-h4" style="color:#4FB783;">
+                Edit Appointment
             </v-card-title>
 
             <v-card-text>
-                ¿Estás seguro que quieres eliminar la cita?
+                <v-form ref="frmRegistro" v-model="frmRegistro">
+                <v-container>
+                    <v-row>
+                    <v-col cols="12" md="6">
+                        <v-text-field label="Name" v-model="editAppointmentData.name" readonly></v-text-field>
+                    </v-col>
+                    </v-row>
+                    <v-row>
+                    <v-col cols="12">
+                        <v-text-field label="Email" type="email" v-model="editAppointmentData.email" readonly></v-text-field>
+                    </v-col>
+                    </v-row>
+                    <v-row>
+                    <v-col cols="12">
+                        <v-text-field label="Phone" v-model="editAppointmentData.phone" readonly></v-text-field>
+                    </v-col>
+                    </v-row>
+                    <v-row>
+                    <v-col cols="6">
+                        <v-text-field label="Age" type="number" v-model="editAppointmentData.age" readonly></v-text-field>
+                    </v-col>
+                    <v-col cols="6">
+                        <v-text-field label="Gender" v-model="editAppointmentData.gender"  readonly></v-text-field>
+                    </v-col>
+                    </v-row>
+                    <v-row>
+                    <v-col cols="12">
+                        <v-text-field label="Date" type="date" v-model="editAppointmentData.date"></v-text-field>
+                    </v-col>
+                    </v-row>
+                    <v-row>
+                    <v-col cols="12">
+                        <v-text-field label="Time" type="time" v-model="editAppointmentData.time"></v-text-field>
+                    </v-col>
+                    </v-row>
+                    <v-row>
+                    <v-col cols="12">
+                      <v-text-field label="Type of reservation" v-model="editAppointmentData.typeofreservation"  readonly></v-text-field>
+                    </v-col>
+                    </v-row>
+                </v-container>
+                </v-form>
             </v-card-text>
 
             <v-card-actions>
                 <v-spacer></v-spacer>
-
-                <v-btn
-                color="red darken-1"
-                text
-                @click="$event => dialog = false"
-                >
+                <v-btn style="color: white;"
+                color="red"
+                rounded
+                @click="dialogEdit = false">
                 Cancelar
                 </v-btn>
 
-                <v-btn
-                color="green darken-1"
-                text
-                @click="$event =>borrar()"
-                >
-                Borrar
+                <v-btn 
+                style="color: white;"
+                color="#4FB783"
+                rounded
+                @click="event=>editar()">
+                Editar
                 </v-btn>
             </v-card-actions>
-            </v-card>
-        </v-dialog>
+        </v-card>
+  </v-dialog>
 
-    </v-row>
+
+          <!--Modal elimina pacientes-->
+          <v-dialog
+              v-model="dialog"
+              max-width="290"
+          >
+              <v-card>
+              <v-card-title class="text-h5">
+                  Eliminar cita
+              </v-card-title>
+
+              <v-card-text>
+                  ¿Estás seguro que quieres eliminar la cita?
+              </v-card-text>
+
+              <v-card-actions>
+                  <v-spacer></v-spacer>
+
+                  <v-btn
+                  color="red darken-1"
+                  text
+                  @click="$event => dialog = false"
+                  >
+                  Cancelar
+                  </v-btn>
+
+                  <v-btn
+                  color="green darken-1"
+                  text
+                  @click="$event =>borrar()"
+                  >
+                  Borrar
+                  </v-btn>
+              </v-card-actions>
+              </v-card>
+          </v-dialog>
+
+      </v-row>
+    </v-card>
+  </v-container>
 </template>
 
 <style>
