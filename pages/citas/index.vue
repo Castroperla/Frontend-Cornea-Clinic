@@ -1,16 +1,17 @@
 <template>
-    <div class="ma-10">
-        <appointments/>
+    <div>
+        <vi-appointments class="ma-5"/>
     </div>
 </template>
 
 <script>
-import appointments from '~/components/Users/Viappointments.vue';
+import Viappointments from '~/components/Users/Viappointments.vue';
 export default {
     layout: 'dashboard',
     components: {
-        appointments
-       
+        Viappointments  
     }
 }
 </script>
+
+
