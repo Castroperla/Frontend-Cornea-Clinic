@@ -30,6 +30,7 @@
           <v-data-table 
               :headers="headers"
               :items="citas"
+              :search="search"
               elevation="2"
               class="tabla1"
           >
@@ -388,7 +389,8 @@ export default {
         requerido: value => !!value || 'Campo Requerido'
       }, 
       frmRegistro: false,
-      appRegistro: false
+      appRegistro: false,
+      search: '',
     }
   }, 
   watch: {
