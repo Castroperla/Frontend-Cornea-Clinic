@@ -13,11 +13,11 @@
               <br>
               <div>
                 <v-row>
-                  <h4 style="padding-left: 15px;">Pending Tasks</h4>
+                  <h4 style="padding-left: 15px;" class="text-h5">Pending Tasks</h4>
                 </v-row>
                 <v-row v-if="tasksSent.length > 0">
                   <ul>
-                    <li v-for="(sentTask, index) in tasksSent" :key="index" :class="{ 'task-past': isTaskPast(sentTask), 'task-active': sentTask.active }">
+                    <li v-for="(sentTask, index) in tasksSent" :key="index" :class="{ 'task-past': isTaskPast(sentTask), 'task-active': sentTask.active }" style="margin-bottom:10px; padding: 5px; border-radius: 5px;">
                       <span>{{ sentTask.text }}</span> - <span>{{ sentTask.dateStart }} - {{ sentTask.dateEnd }}</span>
                     </li>
                   </ul>
@@ -28,11 +28,11 @@
           <v-col cols="5" style="height: 670px;">
             <div>
               <v-row>
-                <h3> ToDo List </h3>
+                <h3 class="text-h3"  style="color: #4FB783!important; margin: 10px;"> ToDo List </h3>
               </v-row>
               <v-row>
                 <ul class="task-list">
-                  <li v-for="(task, index) in tasks" :key="index" :class="{ 'task-past': isTaskPast(task) }">
+                  <li v-for="(task, index) in tasks" :key="index" :class="{ 'task-past': isTaskPast(task) }" style="margin-bottom: 10px;">
                     <!--<input type="checkbox" :checked="task.completed" @change="toggleTask(index)">-->
                     <span :style="{ textDecoration: isTaskPast(task) ? 'line-through' : 'none' }" style="height: auto;">
                       {{ task.text }}
