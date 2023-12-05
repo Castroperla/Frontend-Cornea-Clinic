@@ -71,34 +71,51 @@
         <!--Modal para crear un nueva cita-->
         <v-dialog v-model="nuevaCita" max-width="900">
           <v-card>
-            <v-card-title class="text-h4" style="color:#4FB783;">
-              Add Appointment
+            <v-card-title>
+              <v-row>
+                <v-col cols="10">
+                  Add Appointment
+                </v-col>
+                <v-col cols="2">
+                  <v-icon @click="cerrarModal" style="margin-left: 70px; color: rgb(123, 123, 123); background-color: transparent!important;">mdi-close</v-icon>
+                </v-col>
+              </v-row>
             </v-card-title>
 
             <v-card-text>
               <v-form ref="appRegistro" v-model="appRegistro">
 
                 <v-row align="center">
+
                   <v-col>
                     <p>Email: </p>
-                    <input type="text" class="email" v-model="email" placeholder="Email" :rules="[reglas.requerido]">
+                    <input type="text" class="cajas" v-model="email" placeholder="Email" :rules="[reglas.requerido]">
                   </v-col>
                   <v-col>
                     <p>Date: </p>
-                    <input type="text" class="date" v-model="date" placeholder="Date" :rules="[reglas.requerido]">
+                    <input type="date" class="cajasB" v-model="date" placeholder="Date" :rules="[reglas.requerido]">
                   </v-col>
                   <v-col>
                     <p>Time: </p>
-                    <input type="text" class="time" v-model="time" placeholder="Time" :rules="[reglas.requerido]">
+                    <input type="time" class="cajas" v-model="time" placeholder="Time" :rules="[reglas.requerido]">
                   </v-col>
                   <v-col>
-                    <p>Typeofreservation </p>
-                    <input type="text" class="typeofreservation" v-model="typeofreservation" placeholder="Type" :rules="[reglas.requerido]">
+                    <p>Type of reservation: </p>
+                    <v-radio-group  v-model="typeofreservation" row :rules="[reglas.requerido]">
+                    <v-radio
+                      label="Checkup"
+                      value="Checkup"
+                    ></v-radio>
+                    <v-radio
+                      label="Surgery"
+                      value="Surgery"
+                    ></v-radio>
+                    </v-radio-group>
                   </v-col>
                 </v-row>
 
                 <v-row>
-                  <v-btn id="btnAppointment"  @click="registraCitas"> 
+                  <v-btn id="btnAppointment"  @click="registraCita"> 
                     <p >Add Apointment</p>
                   </v-btn>
                 </v-row>
@@ -120,26 +137,26 @@
               <v-form ref="frmRegistro" v-model="frmRegistro">
               <v-container>
                   <v-row>
-                  <v-col cols="12">
-                      <v-text-field label="Name" v-model="editAppointmentData.name"></v-text-field>
+                  <v-col cols="12" md="6">
+                      <v-text-field label="Name" v-model="editAppointmentData.name" readonly></v-text-field>
                   </v-col>
                   </v-row>
                   <v-row>
                   <v-col cols="12">
-                      <v-text-field label="Email" type="email" v-model="editAppointmentData.lastname"></v-text-field>
+                      <v-text-field label="Email" type="email" v-model="editAppointmentData.email" readonly></v-text-field>
                   </v-col>
                   </v-row>
                   <v-row>
                   <v-col cols="12">
-                      <v-text-field label="Phone" v-model="editAppointmentData.phone"></v-text-field>
+                      <v-text-field label="Phone" v-model="editAppointmentData.phone" readonly></v-text-field>
                   </v-col>
                   </v-row>
                   <v-row>
                   <v-col cols="6">
-                      <v-text-field label="Age" type="number" v-model="editAppointmentData.age"></v-text-field>
+                      <v-text-field label="Age" type="number" v-model="editAppointmentData.age" readonly></v-text-field>
                   </v-col>
                   <v-col cols="6">
-                      <v-select label="Gender" v-model="editAppointmentData.gender" :items="['Male', 'Female', 'Other']"></v-select>
+                      <v-text-field label="Gender" v-model="editAppointmentData.gender"  readonly></v-text-field>
                   </v-col>
                   </v-row>
                   <v-row>
@@ -154,10 +171,7 @@
                   </v-row>
                   <v-row>
                   <v-col cols="12">
-                      <v-radio-group v-model="editAppointmentData.appointmentType">
-                      <v-radio label="Checkup" value="Checkup"></v-radio>
-                      <v-radio label="Surgery" value="Surgery"></v-radio>
-                      </v-radio-group>
+                    <v-text-field label="Type of reservation" v-model="editAppointmentData.typeofreservation"  readonly></v-text-field>
                   </v-col>
                   </v-row>
               </v-container>
@@ -172,6 +186,7 @@
               @click="dialogEdit = false">
               Cancelar
               </v-btn>
+
               <v-btn 
               style="color: white;"
               color="#4FB783"
@@ -180,8 +195,10 @@
               Editar
               </v-btn>
           </v-card-actions>
-          </v-card>
-        </v-dialog>
+      </v-card>
+</v-dialog>
+
+
         <!--Modal elimina pacientes-->
         <v-dialog
             v-model="dialog"
@@ -421,7 +438,7 @@ export default {
       this.editAppointmentData.gender = cita.gender
       this.editAppointmentData.date = cita.date
       this.editAppointmentData.time = cita.time
-      this.editAppointmentData.appointmentType = cita.appointmentType
+      this.editAppointmentData.typeofreservation = cita.typeofreservation
       this.dialogEdit = true
     }, 
     async editar () {
@@ -442,7 +459,7 @@ export default {
           }
           this.dialogEdit = false
     },
-    async registraCitas (){
+    async registraCita(){
       const valid = this.appRegistro = this.$refs.appRegistro.validate()
       if (valid) {
         if (this.appRegistro) {
@@ -468,6 +485,7 @@ export default {
             this.typeofreservation = '',
             this.nuevaCita = false
             this.loadUsers()
+            this.$store.commit('setNewCita', true)
           } else if (content.alert === 'The user is not registered in the database'){
 
           } else if (content.alert === 'Sorry, this date and time are busy. Please try another time.'){
