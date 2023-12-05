@@ -29,6 +29,7 @@
          <v-data-table 
              :headers="headers"
              :items="patients"
+             :search="search"
              elevation="2"
              class="tabla1"
          >
@@ -459,7 +460,8 @@
         requerido: value => !!value || 'Campo Requerido'
       }, 
       frmRegistro: false,
-      pacRegistro: false
+      pacRegistro: false,  
+      search: '', 
     }
    }, 
   watch: {
@@ -580,7 +582,8 @@
                          this.gender='', 
                          this.address='',
                          this.treatment='', 
-                         this.blood='',this.newPatient = false
+                         this.blood='',
+                         this.newPatient = false,
                          this.loadUsers(),
                          this.$store.commit('setNewPatient', true)
                      } else if (content.alert === 'The patient already exists') {
