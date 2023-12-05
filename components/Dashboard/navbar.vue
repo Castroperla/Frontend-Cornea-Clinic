@@ -1,5 +1,5 @@
 <template>
-      <v-app-bar color="white">
+      <v-app-bar app color="white">
         <v-toolbar-title>Vue Vuetify Navbar</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon color="black">

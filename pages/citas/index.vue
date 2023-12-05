@@ -9,8 +9,7 @@ import Viappointments from '~/components/Users/Viappointments.vue';
 export default {
     layout: 'dashboard',
     components: {
-        Viappointments
-       
+        Viappointments  
     }
 }
 </script>
