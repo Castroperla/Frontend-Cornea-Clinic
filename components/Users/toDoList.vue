@@ -12,12 +12,12 @@
               <br>
               <br>
               <div>
-                <v-row>
-                  <h4 style="padding-left: 15px;" class="text-h5">Pending Tasks</h4>
+                <v-row align="center">
+                  <h4 class="text-h5 text-center pb-3 px-5">Pending Tasks</h4>
                 </v-row>
                 <v-row v-if="tasksSent.length > 0">
                   <ul>
-                    <li v-for="(sentTask, index) in tasksSent" :key="index" :class="{ 'task-past': isTaskPast(sentTask), 'task-active': sentTask.active }" style="margin-bottom:10px; padding: 5px; border-radius: 5px;">
+                    <li v-for="(sentTask, index) in tasksSent" :key="index" :class="{ 'task-past': isTaskPast(sentTask), 'task-active': sentTask.active }" style="margin-bottom:10px; padding: 8px; border-radius: 5px;">
                       <span>{{ sentTask.text }}</span> - <span>{{ sentTask.dateStart }} - {{ sentTask.dateEnd }}</span>
                     </li>
                   </ul>
@@ -26,12 +26,12 @@
           </v-col>
           <!--TODOLIST-->
           <v-col cols="5" style="height: 670px;">
-            <div>
+            <v-card elevation="2" class="pa-2">
               <v-row>
-                <h3 class="text-h3"  style="color: #4FB783!important; margin: 10px;"> ToDo List </h3>
+                <h3 class="text-h3 text-center"  style="color: #4FB783!important; margin: 10px; text-align: center!important;"> ToDo List </h3>
               </v-row>
               <v-row>
-                <ul class="task-list">
+                <ul class="task-list px-4">
                   <li v-for="(task, index) in tasks" :key="index" :class="{ 'task-past': isTaskPast(task) }" style="margin-bottom: 10px;">
                     <!--<input type="checkbox" :checked="task.completed" @change="toggleTask(index)">-->
                     <span :style="{ textDecoration: isTaskPast(task) ? 'line-through' : 'none' }" style="height: auto;">
@@ -41,10 +41,11 @@
                     <v-btn icon @click="removeTask(index)">
                       <v-icon class="custom-icon" color="success">mdi mdi-trash-can-outline</v-icon>
                     </v-btn>
+                    <v-divider v-if="index !== tasks.length - 1"></v-divider>
                   </li>
                 </ul>
               </v-row>
-            </div>
+            </v-card>
           </v-col>
         </v-row>
       </v-flex>
