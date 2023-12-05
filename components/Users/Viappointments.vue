@@ -8,7 +8,7 @@
                     rounded color="#4FB783" 
                     class="mb-2" 
                     style="color: white;" 
-                    @click="nuevaCita()"
+                    @click="nuevacita()"
                     v-on="on"
                     v-bind="attrs">
                     Add new cita
@@ -409,23 +409,18 @@ export default {
   }, 
   watch: {
       newAppointment() {
-          if(this.newAppointment){
-              this.citas = []
-              this.loadUsers()
-              this.$store.commit('setNewAppointment', false)
-          }
+         
+          return this.$store.state.newAppointment
       }
   }, 
   computed: {
-      newAppointment () {
-          return this.$store.state.newAppointment
-      }
+      
   },
   mounted () {
       this.loadUsers()
   },
   methods: {
-        nuevaCita() {
+        nuevacita() {
             this.newAppointment = true
         },
         cerrarModal() {
@@ -436,7 +431,6 @@ export default {
           const data = await citas.json()
           if (data.alert === 'success'){
               this.citas = data.citas
-              this.searchResults = [...this.citas];
           }
           console.log('@@patients =>', citas, data)
       }, 
@@ -479,7 +473,7 @@ export default {
       async editar () {
           const valid = this.$refs.frmRegistro.validate()
           if (valid) {
-              console.log('@@@ editPatientsData', this.editAppointmentData)
+              console.log('@@@ editAppointmentData', this.editAppointmentData)
               const rawResponse = await fetch('http://localhost:5000/edit-appointment',{
                   method: 'POST', 
                   headers: {
@@ -494,15 +488,50 @@ export default {
           }
           this.dialogEdit = false
         }, 
-       customFilter(item, search) {
-            const lowerCaseSearch = search.toLowerCase();
-
-            return (
-            item.name.toLowerCase().includes(lowerCaseSearch) ||
-            item.email.toLowerCase().includes(lowerCaseSearch) ||
-            item.phone.toLowerCase().includes(lowerCaseSearch)
-            );
-        }
+       async registraCita () {
+            const valid = this.citRegistro = this.$refs.citRegistro.validate()
+            if(valid) {
+                if (this.citRegistro) {
+                    const sendData = {
+                        name: this.name,
+                        email: this.email, 
+                        phone: this.phone,
+                        age: this.age, 
+                        gender: this.gender, 
+                        date: this.date, 
+                        time: this.time,
+                        appointmentType: this.appointmentType
+                    }
+                    const rawResponse = await fetch('http://localhost:5000/new-appointment',{
+                  method: 'POST', 
+                  headers: {
+                      'Accept': 'application/json', 
+                      'Content-Type': 'application/json'
+                  }, 
+                  body: JSON.stringify(this.editAppointmentData) 
+                })
+                const content = await rawResponse.json()
+                if(content.alert === 'success') {
+                    this.name = '', 
+                    this.email='', 
+                    this.phone='',
+                    this.age='', 
+                    this.gender='', 
+                    this.date='',
+                    this.time='', 
+                    this.appointmentType='',
+                    this.newAppointment = false, 
+                    this.loadUsers(),
+                    this.$store.commit('setNewAppointment', true)
+                } else if (content.alert === 'The appointment already exists') {
+                    //alerta
+                }
+                console.log('@@ response', content)
+             } else {
+                //error
+             }
+            }
+       }
     }
 }
 </script>
