@@ -1,6 +1,7 @@
 <template>
-    <v-container fluid>
-     <v-row>
+  <v-container fluid>
+    <v-card elevation="2" class="pa-6">
+      <v-row>
           <!--Boton para modal nuevo paciente-->
           <v-dialog v-model="newPatient" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
@@ -16,174 +17,191 @@
             </template>
           </v-dialog>
 
-         <v-spacer></v-spacer>
+          <v-spacer></v-spacer>
 
-         <v-text-field
-             v-model="search"
-             append-icon="mdi mdi-account-search-outline"
-             label="Search"
-             single-line
-             hide-details
-         ></v-text-field>
-             
-         <v-data-table 
-             :headers="headers"
-             :items="patients"
-             :search="search"
-             elevation="2"
-             class="tabla1"
-         >
-         
-         <template #[`item.Acciones`]="{ item }">
-             <v-tooltip top>
-                 <template v-slot:activator="{on, attrs}">
-                     <v-btn
-                         color="red"
-                         icon 
-                         @click="deletePatients(item.email)"
-                         v-bind="attrs"
-                         v-on="on"
-                     >
-                     <v-icon>mdi mdi-trash-can-outline</v-icon>
-                     </v-btn>
-                 </template>
-                 <span>
-                     Eliminar el paciente{{ item.name }}
-                 </span>
-             </v-tooltip>
- 
-             <v-tooltip top>
-                 <template v-slot:activator="{on, attrs}">
-                     <v-btn
-                         color="#3e68ff"
-                         icon 
-                         v-bind="attrs"
-                         @click="editPatients(item)"
-                         v-on="on"
-                     >
-                     <v-icon>mdi mdi-pencil-outline</v-icon>
-                     </v-btn>
-                 </template>
-                 <span>
-                     Editar el paciente {{ item.name }}
-                 </span>
-             </v-tooltip>
-         </template> 
-         </v-data-table>
- 
+          <v-text-field
+              v-model="search"
+              append-icon="mdi mdi-account-search-outline"
+              label="Search"
+              single-line
+              hide-details
+          ></v-text-field>
+              
+          <v-data-table 
+              :headers="headers"
+              :items="patients"
+              :search="search"
+              elevation="2"
+              class="tabla1"
+          >
+          
+          <template #[`item.Acciones`]="{ item }">
+              <v-tooltip top>
+                  <template v-slot:activator="{on, attrs}">
+                      <v-btn
+                          color="red"
+                          icon 
+                          @click="deletePatients(item.email)"
+                          v-bind="attrs"
+                          v-on="on"
+                      >
+                      <v-icon>mdi mdi-trash-can-outline</v-icon>
+                      </v-btn>
+                  </template>
+                  <span>
+                      Eliminar el paciente{{ item.name }}
+                  </span>
+              </v-tooltip>
+
+              <v-tooltip top>
+                  <template v-slot:activator="{on, attrs}">
+                      <v-btn
+                          color="#3e68ff"
+                          icon 
+                          v-bind="attrs"
+                          @click="editPatients(item)"
+                          v-on="on"
+                      >
+                      <v-icon>mdi mdi-pencil-outline</v-icon>
+                      </v-btn>
+                  </template>
+                  <span>
+                      Editar el paciente {{ item.name }}
+                  </span>
+              </v-tooltip>
+          </template> 
+          </v-data-table>
+
     <!--MODAL PARA AGREGAR UN NUEVO PACIENTE-->
-    <v-dialog v-model="newPatient" max-width="900">
-      <v-card>
-        <v-card-title>
-            <v-row>
-                <v-col cols="10">
-                    Agregar un paciente nuevo
-                </v-col>
-                <v-col cols="2">
-                    <v-icon  @click="cerrarModal" style="margin-left: 70px; color: rgb(123, 123, 123); background-color: transparent!important;">mdi-close</v-icon>
-                </v-col>
-            </v-row>
-        </v-card-title>
+    <v-dialog 
+      v-model="newPatient" 
+      max-width="900"
+    >
+    <v-card>
+      <v-card-title>
+        <v-row align="center">
+          <v-col cols="10">
+            <span class="headline">Add new patient</span>
+          </v-col>
+          <v-col cols="2" class="text-right">
+            <v-icon @click="cerrarModal" class="icon-close">mdi-close</v-icon>
+          </v-col>
+        </v-row>
+      </v-card-title>
 
-        <v-card-text>
-          <v-form ref="pacRegistro" v-model="pacRegistro">
-            <v-row align="center" >
+      <v-card-text>
+        <v-form ref="pacRegistro" v-model="pacRegistro">
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-text-field
+                label="First name"
+                v-model="name"
+                outlined
+                :rules="[reglas.requerido]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                label="Last name"
+                v-model="lastname"
+                outlined
+                :rules="[reglas.requerido]"
+              ></v-text-field>
+            </v-col>
+          </v-row>
 
-              <v-col>
-                <p>First name: </p>
-                <input type="text" class="cajas" v-model="name" placeholder="Name" :rules="[reglas.requerido]">
-              </v-col>
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-text-field
+                label="Email"
+                v-model="email"
+                outlined
+                :rules="[reglas.requerido]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                label="Mobile"
+                v-model="phone"
+                outlined
+                :rules="[reglas.requerido]"
+              ></v-text-field>
+            </v-col>
+          </v-row>
 
-              <v-col>
-                <p>Lastname </p>
-                <input type="text" class="cajas" v-model="lastname" :rules="[reglas.requerido]">
-              </v-col>
+          <v-row>
+            <v-col cols="12" md="4">
+              <v-text-field
+                type="date"
+                label="Date of birth"
+                v-model="birthday"
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-text-field
+                label="Age"
+                v-model="age"
+                outlined
+                :rules="[reglas.requerido]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-select
+                label="Gender"
+                v-model="gender"
+                :items="['Male', 'Female', 'Other']"
+                outlined
+                :rules="[reglas.requerido]"
+              ></v-select>
+            </v-col>
+          </v-row>
 
-            </v-row>
+          <v-text-field
+            label="Address"
+            v-model="address"
+            outlined
+          ></v-text-field>
 
-            <v-row>
-              <v-col>
-                <p>Email: </p>
-                <input type="email" class="cajas" v-model="email" :rules="[reglas.requerido]"> 
-              </v-col>
-              <v-col>
-                <p>Mobile </p>
-                <input type="text" class="cajas" v-model="phone" :rules="[reglas.requerido]">
-              </v-col>
-            </v-row>
-            
-            <v-row align="center" >
+          <v-text-field
+            label="Treatment"
+            v-model="treatment"
+            outlined
+          ></v-text-field>
 
-              <v-col cols="4">
-                <p>Date of birth </p>
-                <input type="date" class="cajasB" v-model="birthday">
-              </v-col>
+          <v-text-field
+            label="Blood Type"
+            v-model="blood"
+            outlined
+          ></v-text-field>
 
-              <v-col cols="4">
-                <p>Age </p>
-                <input type="number" class="cajasC" v-model="age" :rules="[reglas.requerido]">  
-              </v-col>
-
-              <v-col cols="4">
-                <p>Gender</p>
-                <v-radio-group  v-model="gender" row :rules="[reglas.requerido]">
-                  <v-radio
-                    label="Male"
-                    value="Male"
-                  ></v-radio>
-                  <v-radio
-                    label="Female"
-                    value="Female"
-                  ></v-radio>
-                  <v-radio
-                    label="Other"
-                    value="Other"
-                  ></v-radio>
-                </v-radio-group>
-              </v-col>
-
-            </v-row>
-
-            <v-row align="center" >
-              <v-col>
-                <p> Address </p>
-                <input type="text" class="cajasA" v-model="address">
-              </v-col>
-            </v-row>
-            
-            <v-row align="center" >
-              <v-col>
-                <p>Treatment </p>
-                <input type="text" class="cajasP" v-model="treatment">
-              </v-col>
-            </v-row>
-
-            <v-row align="center">
-              <v-col>
-                <p>Blood Type: </p>
-                <input type="text" class="cajas" v-model="blood">
-              </v-col>
-            </v-row>
-
-            <v-row>
-              <v-btn id="btnPatients"  @click="registraPacientes"> 
-                <p >Add patients</p>
-              </v-btn>
-            </v-row>
-          </v-form>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+          <v-row>
+            <v-btn @click="registraPacientes" color="#4FB783" rounded block class="mt-4" style="color:white">
+              Add patients
+            </v-btn>
+          </v-row>
+        </v-form>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
     <!--MODAL PARA EDITAR PACIENTE-->
       <v-dialog
         v-model="dialogEdit"
         max-width="800" 
       >
         <v-card>
-          <v-card-title class="text-h4" style="color:#4FB783;">
-          Edit Patient
+          <v-card-title>
+            <v-row align="center">
+              <v-col cols="10">
+                <span class="headline">Edit patient</span>
+              </v-col>
+              <v-col cols="2" class="text-right">
+                <v-icon @click="cerrarModal" class="icon-close">mdi-close</v-icon>
+              </v-col>
+            </v-row>
           </v-card-title>
-  
+          
+
       <!--Editar Paciente-->
           <v-card-text>
           <v-form ref="frmRegistro" v-model="frmRegistro">
@@ -223,10 +241,10 @@
             </v-container>
           </v-form>
           </v-card-text>
-  
+
           <v-card-actions>
               <v-spacer></v-spacer>
-  
+
               <v-btn
               style="color: white;"
               color="red"
@@ -235,7 +253,7 @@
               >
               Cancelar
               </v-btn>
-  
+
               <v-btn
               style="color: white;"
               color="#4FB783"
@@ -248,43 +266,44 @@
         </v-card>
       </v-dialog>
     <!--MODAL PARA ELIMINAR PACIENTE-->
-     <v-dialog
-         v-model="dialog"
-         max-width="290"
-     >
-         <v-card>
-         <v-card-title class="text-h5">
-             Eliminar Paciente
-         </v-card-title>
- 
-         <v-card-text>
-             ¿Estás seguro que quieres eliminar el paciente?
-         </v-card-text>
- 
-         <v-card-actions>
-             <v-spacer></v-spacer>
- 
-             <v-btn
-             color="red darken-1"
-             text
-             @click="dialog = false"
-             >
-             Cancelar
-             </v-btn>
- 
-             <v-btn
-             color="green darken-1"
-             text
-             @click="borrar()"
-             >
-             Borrar
-             </v-btn>
-         </v-card-actions>
-         </v-card>
-     </v-dialog>
+      <v-dialog
+          v-model="dialog"
+          max-width="290"
+      >
+          <v-card>
+          <v-card-title class="text-h5">
+              Eliminar Paciente
+          </v-card-title>
 
-     </v-row>
-    </v-container>
+          <v-card-text>
+              ¿Estás seguro que quieres eliminar el paciente?
+          </v-card-text>
+
+          <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <v-btn
+              color="red darken-1"
+              text
+              @click="dialog = false"
+              >
+              Cancelar
+              </v-btn>
+
+              <v-btn
+              color="green darken-1"
+              text
+              @click="borrar()"
+              >
+              Borrar
+              </v-btn>
+          </v-card-actions>
+          </v-card>
+      </v-dialog>
+
+      </v-row>
+    </v-card>
+  </v-container>
  </template>
  
  <style>
