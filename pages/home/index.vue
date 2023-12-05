@@ -9,7 +9,7 @@ export default {
 </script>
 
 <template>
-     <div class="ma-10">
+     <div class="ma-5">
         <homeVue />
     </div>
 </template>

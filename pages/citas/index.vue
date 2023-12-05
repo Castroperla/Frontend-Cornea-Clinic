@@ -1,6 +1,6 @@
 <template>
-    <div class="ma-10">
-        <vi-appointments/>
+    <div>
+        <vi-appointments class="ma-5"/>
     </div>
 </template>
 
