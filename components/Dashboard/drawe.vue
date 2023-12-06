@@ -3,7 +3,7 @@ export default {
   data() {
     return {
       items: [
-        { text: 'Home', icon: 'mdi-view-dashboard', route: '/home' },
+        { text: 'Home', icon: 'mdi-home-city', route: '/home' },
         { text: 'Appointments', icon: 'mdi mdi-notebook-plus', route: '/citas' },
         { text: 'Patients', icon: 'mdi-account-group-outline', route: '/pacientes' },
         { text: 'Schedule', icon: 'mdi mdi-book-clock', route: '/toDoList' }

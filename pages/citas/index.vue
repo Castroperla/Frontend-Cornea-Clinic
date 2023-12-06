@@ -1,5 +1,5 @@
 <template>
-    <div class="ma-10">
+    <div class="ma-1">
         <appointments/>
     </div>
 </template>

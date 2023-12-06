@@ -18,9 +18,11 @@
     <v-app>
         <draweVue/>
         <navbarVue/>
+        <div style="background: #F5F5F5!important;">
             <v-main>
                 <Nuxt />
             </v-main> 
+        </div>      
     </v-app>
 </template>
 

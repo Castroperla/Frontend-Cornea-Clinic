@@ -1,5 +1,40 @@
 <template>
   <v-container>
+    <v-row justify="center">
+      <v-col cols="12" md="4">
+        <v-card class="custom-color">
+          <v-card-title class="headline">Optometrist</v-card-title>
+          <v-card-subtitle>Dr. John Doe</v-card-subtitle>
+          <v-card-text>
+            Experience clear vision and comfort with our range of contact lenses.
+            Our optometrists will guide you to the right choice.
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12" md="4">
+        <v-card class="custom-color">
+          <v-card-title class="headline">Eyeglasses</v-card-title>
+          <v-card-subtitle>Choose Your Style</v-card-subtitle>
+          <v-card-text>
+            Experience clear vision and comfort with our range of contact lenses.
+            Our optometrists will guide you to the right choice.
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12" md="4">
+        <v-card class="custom-color">
+          <v-card-title class="headline">Contact Lenses</v-card-title>
+          <v-card-subtitle>Comfortable Vision</v-card-subtitle>
+          <v-card-text>
+            Experience clear vision and comfort with our range of contact lenses.
+            Our optometrists will guide you to the right choice.
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <v-row>
       <v-col cols="12">
         <v-card elevation="2" class="pa-2">
@@ -35,16 +70,19 @@
 </template>
 
   
-  <script>
-  export default {
-    layout: 'dashboard',
-    data() {
-        return {}
-        }
-    }
-  </script>
+<script>
+export default {
+  layout: 'dashboard',
+  data() {
+      return {}
+      }
+  }
+</script>
   
-  <style scoped>
-  
-  </style>
+<style scoped>
+.custom-color {
+  background: #4FB783;
+  color: white; 
+}
+</style>
   

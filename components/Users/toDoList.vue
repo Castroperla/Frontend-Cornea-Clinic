@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <v-card elevation="2" class="pa-6">
     <v-layout>
       <v-flex>
         <v-row>
@@ -94,6 +95,7 @@
           </v-card-text>
         </v-card>
       </v-dialog>
+    </v-card>
   </v-container>
 </template>
 

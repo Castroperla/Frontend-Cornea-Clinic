@@ -204,7 +204,7 @@
                 color="red"
                 rounded
                 @click="dialogEdit = false">
-                Cancelar
+                Cancel
                 </v-btn>
 
                 <v-btn 
@@ -212,7 +212,7 @@
                 color="#4FB783"
                 rounded
                 @click="event=>editar()">
-                Editar
+                Edit
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -226,11 +226,10 @@
           >
               <v-card>
               <v-card-title class="text-h5">
-                  Eliminar cita
+                Delete appointment
               </v-card-title>
-
               <v-card-text>
-                  ¿Estás seguro que quieres eliminar la cita?
+                Are you sure to eliminate this appointment?
               </v-card-text>
 
               <v-card-actions>
@@ -241,7 +240,7 @@
                   text
                   @click="$event => dialog = false"
                   >
-                  Cancelar
+                  Cancel
                   </v-btn>
 
                   <v-btn
@@ -249,7 +248,7 @@
                   text
                   @click="$event =>borrar()"
                   >
-                  Borrar
+                  Delete
                   </v-btn>
               </v-card-actions>
               </v-card>

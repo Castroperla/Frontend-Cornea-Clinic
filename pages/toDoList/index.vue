@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="ma-1" id="app">
     <to-DoList />
   </div>
 </template>

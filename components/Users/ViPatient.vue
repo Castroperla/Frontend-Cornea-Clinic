@@ -190,52 +190,76 @@
         max-width="800" 
       >
         <v-card>
-          <v-card-title>
-            <v-row align="center">
-              <v-col cols="10">
-                <span class="headline">Edit patient</span>
-              </v-col>
-              <v-col cols="2" class="text-right">
-                <v-icon @click="cerrarModal" class="icon-close">mdi-close</v-icon>
-              </v-col>
-            </v-row>
+          <v-card-title class="text-h4" style="color:#4FB783;">
+            Edit Patient  
           </v-card-title>
-          
-
       <!--Editar Paciente-->
           <v-card-text>
           <v-form ref="frmRegistro" v-model="frmRegistro">
             <v-container>
               <v-row>
                 <v-col cols="12" md="6">
-                  <v-text-field label="First Name" v-model="editPatientsData.name"></v-text-field>
+                  <v-text-field 
+                    label="First Name" 
+                    v-model="editPatientsData.name"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-text-field label="Last Name" v-model="editPatientsData.lastname"></v-text-field>
+                  <v-text-field 
+                    label="Last Name" 
+                    v-model="editPatientsData.lastname"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-text-field label="Email" type="email" v-model="editPatientsData.email"></v-text-field>
+                  <v-text-field 
+                    label="Email" 
+                    type="email" 
+                    v-model="editPatientsData.email"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-text-field label="Mobile" v-model="editPatientsData.phone"></v-text-field>
+                  <v-text-field 
+                    label="Mobile" 
+                    v-model="editPatientsData.phone"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="4">
-                  <v-text-field label="Date of Birth" type="date" v-model="editPatientsData.birthday"></v-text-field>
+                  <v-text-field 
+                    label="Date of Birth" 
+                    type="date" v-model="editPatientsData.birthday"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="4">
-                  <v-text-field label="Age" type="number" v-model="editPatientsData.age"></v-text-field>
+                  <v-text-field 
+                    label="Age" 
+                    type="number" 
+                    v-model="editPatientsData.age"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="12" md="4">
-                  <v-select label="Gender" v-model="editPatientsData.gender" :items="['male', 'female', 'other']"></v-select>
+                  <v-select 
+                    label="Gender" 
+                    v-model="editPatientsData.gender" 
+                    :items="['male', 'female', 'other']"
+                  ></v-select>
                 </v-col>
                 <v-col cols="12">
-                  <v-text-field label="Address" v-model="editPatientsData.address"></v-text-field>
+                  <v-text-field 
+                    label="Address" 
+                    v-model="editPatientsData.address"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="10">
-                  <v-text-field label="Treatment" v-model="editPatientsData.treatment"></v-text-field>
+                  <v-text-field 
+                    label="Treatment" 
+                    v-model="editPatientsData.treatment"
+                  ></v-text-field>
                 </v-col>
                 <v-col cols="10">
-                  <v-text-field label="Blood Type" v-model="editPatientsData.blood"></v-text-field>
+                  <v-text-field 
+                  label="Blood Type" 
+                  v-model="editPatientsData.blood"
+                ></v-text-field>
                 </v-col>
               </v-row>
             </v-container>
@@ -251,7 +275,7 @@
               rounded
               @click="dialogEdit = false"
               >
-              Cancelar
+              Cancel
               </v-btn>
 
               <v-btn
@@ -260,7 +284,7 @@
               rounded
               @click="editar()"
               >
-              Editar
+              Edit
               </v-btn>
           </v-card-actions>
         </v-card>
@@ -272,11 +296,11 @@
       >
           <v-card>
           <v-card-title class="text-h5">
-              Eliminar Paciente
+              Delete Patient
           </v-card-title>
 
           <v-card-text>
-              ¿Estás seguro que quieres eliminar el paciente?
+              Are you sure to eliminate this patient?
           </v-card-text>
 
           <v-card-actions>
@@ -287,7 +311,7 @@
               text
               @click="dialog = false"
               >
-              Cancelar
+              Cancel
               </v-btn>
 
               <v-btn
@@ -295,7 +319,7 @@
               text
               @click="borrar()"
               >
-              Borrar
+              Delete
               </v-btn>
           </v-card-actions>
           </v-card>
