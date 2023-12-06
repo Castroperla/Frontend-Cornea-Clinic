@@ -1,5 +1,5 @@
 <template>
-    <div class="ma-5">
+    <div class="ma-1">
         <v-row>
         <v-col cols="12">
             <pat-register/>
